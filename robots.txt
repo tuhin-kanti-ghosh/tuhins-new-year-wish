@@ -1,0 +1,29 @@
+# =====================================================
+# 🎅 FrostByte Valley - Reindeer Navigation Rules 🦌
+# =====================================================
+# Last updated by: Head Elf Tuhin
+# Season: Winter 2024-2025
+
+User-agent: *
+Disallow: /santas_workshop.html
+Disallow: /api/gifts/
+Disallow: /elf_secrets/
+Disallow: /naughty_list/
+
+# =====================================================
+# 🎁 GIFT FRAGMENT 1 - FOR CLEVER VISITORS 🎁
+# =====================================================
+# 
+# Ho Ho Ho! You found Santa's hidden note!
+# 
+# Fragment 1 (Base64): aGFwcHk=
+# Hint: This word describes a joyful feeling!
+#
+# Next clue: Check the hidden HTML elements
+# for data attributes on the main page.
+#
+# 🎄 Merry Coding! 🎄
+# =====================================================
+
+# Sitemap
+Sitemap: https://frostbyte-valley.local/sitemap.xml

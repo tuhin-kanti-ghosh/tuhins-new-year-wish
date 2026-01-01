@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>🎅 Santa's Secret Workshop - ELVES ONLY 🎄</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 50%, #388e3c 100%);
+            color: #fff;
+            font-family: 'Courier New', monospace;
+            min-height: 100vh;
+            padding: 2rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Snow effect */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(white 1px, transparent 1px),
+                radial-gradient(white 1px, transparent 1px);
+            background-size: 50px 50px, 30px 30px;
+            background-position: 0 0, 25px 25px;
+            animation: snow 10s linear infinite;
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes snow {
+            0% { transform: translateY(-100px); }
+            100% { transform: translateY(100vh); }
+        }
+
+        .workshop {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background: rgba(0,0,0,0.3);
+            border-radius: 20px;
+            border: 3px solid #ffeb3b;
+        }
+
+        .header h1 {
+            font-family: 'Mountains of Christmas', cursive;
+            font-size: 3rem;
+            color: #ffeb3b;
+            text-shadow: 3px 3px 0 #c62828;
+            margin-bottom: 0.5rem;
+        }
+
+        .warning-banner {
+            background: linear-gradient(90deg, #c62828, #b71c1c, #c62828);
+            color: #fff;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            text-align: center;
+            animation: pulse 2s ease-in-out infinite;
+            border: 2px solid #ffcdd2;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(198,40,40,0.5); }
+            50% { box-shadow: 0 0 40px rgba(198,40,40,0.8); }
+        }
+
+        .terminal {
+            background: #1a1a1a;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            border: 3px solid #4caf50;
+        }
+
+        .terminal-header {
+            background: linear-gradient(90deg, #c62828, #d32f2f);
+            padding: 0.8rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .terminal-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .terminal-btn.red { background: #ff5f56; }
+        .terminal-btn.yellow { background: #ffbd2e; }
+        .terminal-btn.green { background: #27ca3f; }
+
+        .terminal-title {
+            flex: 1;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #fff;
+        }
+
+        .terminal-body {
+            padding: 1.5rem;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .terminal-body pre {
+            white-space: pre-wrap;
+            color: #4caf50;
+        }
+
+        .hint-box {
+            background: rgba(255,235,59,0.1);
+            border-left: 4px solid #ffeb3b;
+            padding: 1rem 1.5rem;
+            margin: 1rem 0;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .hint-box h3 {
+            color: #ffeb3b;
+            margin-bottom: 0.5rem;
+            font-family: 'Mountains of Christmas', cursive;
+        }
+
+        .fragment-display {
+            background: rgba(76,175,80,0.2);
+            border: 2px dashed #4caf50;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 10px;
+            font-family: monospace;
+        }
+
+        .fragment-item {
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            background: rgba(0,0,0,0.3);
+            border-radius: 5px;
+        }
+
+        .fragment-label {
+            color: #ffeb3b;
+            font-weight: bold;
+        }
+
+        .fragment-value {
+            color: #81c784;
+            font-family: 'Courier New', monospace;
+        }
+
+        .assembly-box {
+            background: linear-gradient(135deg, rgba(198,40,40,0.2), rgba(183,28,28,0.2));
+            border: 2px solid #c62828;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 1.5rem 0;
+        }
+
+        .assembly-box h3 {
+            color: #ff8a80;
+            margin-bottom: 1rem;
+            font-family: 'Mountains of Christmas', cursive;
+            font-size: 1.5rem;
+        }
+
+        .assembly-box ol {
+            padding-left: 1.5rem;
+            color: #ffcdd2;
+        }
+
+        .assembly-box li {
+            margin: 0.5rem 0;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 2rem;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #c62828, #b71c1c);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 30px;
+            font-family: 'Mountains of Christmas', cursive;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+            border: 2px solid #ffeb3b;
+        }
+
+        .back-link:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(198,40,40,0.5);
+        }
+
+        .decorations {
+            position: fixed;
+            font-size: 2rem;
+            opacity: 0.5;
+            z-index: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Decorations -->
+    <div class="decorations" style="top: 10%; left: 5%;">🎄</div>
+    <div class="decorations" style="top: 20%; right: 10%;">⭐</div>
+    <div class="decorations" style="bottom: 20%; left: 8%;">🎁</div>
+    <div class="decorations" style="bottom: 15%; right: 5%;">🦌</div>
+    <div class="decorations" style="top: 50%; left: 3%;">❄️</div>
+    <div class="decorations" style="top: 60%; right: 3%;">☃️</div>
+
+    <div class="workshop">
+        <div class="header">
+            <h1>🎅 Santa's Secret Workshop 🎄</h1>
+            <p>Where holiday magic becomes reality!</p>
+        </div>
+
+        <div class="warning-banner">
+            ⚠️ RESTRICTED AREA - AUTHORIZED ELVES ONLY ⚠️
+        </div>
+
+        <div class="terminal">
+            <div class="terminal-header">
+                <div class="terminal-btn red"></div>
+                <div class="terminal-btn yellow"></div>
+                <div class="terminal-btn green"></div>
+                <span class="terminal-title">🎄 workshop_terminal.sh - Elf Admin 🎄</span>
+            </div>
+            <div class="terminal-body">
+<pre>
+╔══════════════════════════════════════════════════════════════╗
+║          🎅 TUHIN'S NEW YEAR WISH - FRAGMENT GUIDE 🎅        ║
+╠══════════════════════════════════════════════════════════════╣
+║  Status: WISH FRAGMENTED                                     ║
+║  Hidden By: Chief Elf Tuhin                                  ║
+║  Occasion: New Year 2025 Celebration                         ║
+║  Security Level: MODERATE                                    ║
+╚══════════════════════════════════════════════════════════════╝
+</pre>
+
+                <div class="hint-box">
+                    <h3>🎁 THE WISH FRAGMENTS</h3>
+                    <p>Tuhin's New Year wish has been split into 3 magical fragments. 
+                    Each fragment is encoded with Base64 holiday enchantment!</p>
+                </div>
+
+                <div class="fragment-display">
+                    <div class="fragment-item">
+                        <span class="fragment-label">Fragment 1:</span>
+                        <span class="fragment-value">aGFwcHk=</span>
+                        <br>
+                        <small style="color: #90a4ae;">📍 Location: HTML source comments (GIFT_FRAGMENT_1)</small>
+                    </div>
+                    <div class="fragment-item">
+                        <span class="fragment-label">Fragment 2:</span>
+                        <span class="fragment-value">bmV3IHllYXI=</span>
+                        <br>
+                        <small style="color: #90a4ae;">📍 Location: Hidden div data-fragment attribute</small>
+                    </div>
+                    <div class="fragment-item">
+                        <span class="fragment-label">Fragment 3:</span>
+                        <span class="fragment-value">ZnJvbSB0dWhpbg==</span>
+                        <br>
+                        <small style="color: #90a4ae;">📍 Location: WORKSHOP_CONFIG.elfAuth.guestToken</small>
+                    </div>
+                </div>
+
+                <div class="assembly-box">
+                    <h3>🔧 WISH ASSEMBLY INSTRUCTIONS</h3>
+                    <ol>
+                        <li>Collect all 3 fragments from different locations</li>
+                        <li>Decode each fragment using Base64 decoder</li>
+                        <li>Browser console: <code style="background:#000;padding:2px 5px;border-radius:3px;">atob("encoded_string")</code></li>
+                        <li>Combine decoded fragments with SPACES</li>
+                        <li>Format: <code style="background:#000;padding:2px 5px;border-radius:3px;">fragment1 + " " + fragment2 + " " + fragment3</code></li>
+                    </ol>
+                </div>
+
+<pre style="color: #81c784; margin-top: 1rem;">
+┌─────────────────────────────────────────────────────┐
+│  🎄 QUICK DECODE GUIDE 🎄                           │
+├─────────────────────────────────────────────────────┤
+│  Open browser console (F12 → Console tab)           │
+│                                                     │
+│  > atob("aGFwcHk=")                                │
+│  < "happy"                                          │
+│                                                     │
+│  > atob("bmV3IHllYXI=")                            │
+│  < "new year"                                       │
+│                                                     │
+│  > atob("ZnJvbSB0dWhpbg==")                        │
+│  < "from tuhin"                                     │
+│                                                     │
+│  🚩 FINAL FLAG: happy new year from tuhin          │
+└─────────────────────────────────────────────────────┘
+</pre>
+
+                <div class="hint-box" style="border-color: #4caf50; background: rgba(76,175,80,0.1);">
+                    <h3>✅ VERIFICATION</h3>
+                    <p><strong>Flag Format:</strong> All lowercase, words separated by spaces</p>
+                    <p><strong>Example:</strong> "happy new year from tuhin"</p>
+                    <p><strong>Pro Tip:</strong> On main page, try calling <code>unwrapGift()</code> in console!</p>
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align: center;">
+            <a href="index.html" class="back-link">🎄 Return to FrostByte Valley 🎅</a>
+        </div>
+    </div>
+
+    <script>
+        console.log("🎅 Ho Ho Ho! You found Santa's Workshop!");
+        console.log("🎁 All fragments are revealed here for verification.");
+        console.log("❄️ But the real challenge is finding them on the main page!");
+    </script>
+</body>
+</html>
