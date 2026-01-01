@@ -1,0 +1,38 @@
+{
+    "status": "success",
+    "message": "🎅 Ho Ho Ho! You discovered Santa's Gift API!",
+    "challenge": {
+        "name": "Tuhin's New Year Wish",
+        "difficulty": "Moderate",
+        "theme": "Winter Wonderland",
+        "author": "Tuhin",
+        "season": "New Year 2025"
+    },
+    "santa_says": "Well done, clever elf! You found the secret gift storage!",
+    "wish_fragments": {
+        "fragment_1": {
+            "encoded": "aGFwcHk=",
+            "hint": "A feeling of joy and celebration 🎉",
+            "location": "HTML source comments"
+        },
+        "fragment_2": {
+            "encoded": "bmV3IHllYXI=",
+            "hint": "January 1st celebration 🎆",
+            "location": "Hidden div data-fragment attribute"
+        },
+        "fragment_3": {
+            "encoded": "ZnJvbSB0dWhpbg==",
+            "hint": "The sender of this wish 🎅",
+            "location": "WORKSHOP_CONFIG.elfAuth.guestToken"
+        }
+    },
+    "assembly": {
+        "method": "Base64 decode each fragment",
+        "combine": "Join with spaces",
+        "command": "atob('fragment') for each"
+    },
+    "final_flag": "Decode and combine all fragments!",
+    "decorations": ["🎄", "❄️", "⭐", "🎁", "☃️", "🦌", "🔔"],
+    "merry_christmas": true,
+    "happy_new_year": true
+}
