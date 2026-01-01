@@ -8,7 +8,7 @@ fragments and reveal the secret message before midnight?
 
 ## 🎮 Play Now
 
-**[🎄 Enter FrostByte Valley](https://YOUR-USERNAME.github.io/tuhin-new-year-wish/)**
+**[🎄 Enter FrostByte Valley](https://tuhin-kanti-ghosh.github.io/tuhins-new-year-wish/)**
 
 ## ❄️ Features
 
