@@ -3,11 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>❄️ FrostByte Valley - New Year Celebration 2025 🎅</title>
-    <!-- Developer Note: Santa's secret workshop at /santas_workshop.html -->
-    <!-- TODO: Remove debug data before the elves see it! -->
+    <meta name="author" content="dev_tuhin">
+    <meta name="description" content="FrostByte Valley - Where winter dreams come true">
+    <meta name="keywords" content="winter, celebration, new year, 2025">
+    <!-- og tags for social sharing - asked by marketing team -->
+    <meta property="og:title" content="FrostByte Valley">
+    <meta property="og:description" content="Join the winter celebration!">
+    <meta name="debug-mode" content="disabled">
+    <!-- NOTE TO SELF: remove before pushing to prod!! -->
+    <meta name="dev-note" content="backup endpoint: /old_api/v1/data.json">
+    
+    <title>❄️ FrostByte Valley - Winter Celebration 2025 🎅</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&family=Nunito:wght@300;400;600;700&family=Fira+Code&display=swap" rel="stylesheet">
+    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
+        /* 
+         * FrostByte Valley - Main Stylesheet
+         * Author: Tuhin K.
+         * Last modified: Dec 29, 2024
+         * 
+         * TODO: Clean up unused styles before Jan release
+         * FIXME: Mobile nav menu still buggy on iOS
+         * 
+         * Color Palette:
+         * - Primary Blue: #1a237e
+         * - Accent Red: #c62828  
+         * - Snow White: #f5f5f5
+         * - Gold: #ffd700
+         */
+
+        :root {
+            --primary-dark: #0a0f2e;
+            --primary-blue: #1a237e;
+            --accent-red: #c62828;
+            --accent-red-dark: #8e0000;
+            --snow-white: #f5f5f5;
+            --ice-blue: #e3f2fd;
+            --gold: #ffd700;
+            --gold-dark: #c5a000;
+            --text-light: #ffffff;
+            --text-muted: #b0bec5;
+            --shadow-dark: rgba(0, 0, 0, 0.4);
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            
+            /* z-index management - sarah said to document these */
+            --z-background: -1;
+            --z-content: 1;
+            --z-overlay: 100;
+            --z-modal: 200;
+            --z-snow: 300;
+            --z-santa: 400;
+            --z-notification: 500;
+        }
 
         * {
             margin: 0;
@@ -15,945 +66,2191 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(180deg, #0c1445 0%, #1a237e 30%, #283593 60%, #3949ab 100%);
-            min-height: 100vh;
-            color: #fff;
-            overflow-x: hidden;
-            position: relative;
+        html {
+            scroll-behavior: smooth;
         }
 
-        /* Snowfall Animation */
-        .snowflakes {
+        body {
+            font-family: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(
+                180deg,
+                var(--primary-dark) 0%,
+                #0d1642 15%,
+                var(--primary-blue) 40%,
+                #283593 70%,
+                #3949ab 100%
+            );
+            min-height: 100vh;
+            color: var(--text-light);
+            overflow-x: hidden;
+            line-height: 1.6;
+            /* prevent text selection on decorative elements - ux feedback */
+            -webkit-user-select: text;
+            user-select: text;
+        }
+
+        /* === SNOWFALL SYSTEM === */
+        /* rewrote this 3 times... finally works properly lol */
+        
+        .snowfall-container {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0; /* shorthand for top/right/bottom/left: 0 */
             pointer-events: none;
-            z-index: 1000;
+            z-index: var(--z-snow);
             overflow: hidden;
         }
 
         .snowflake {
             position: absolute;
-            top: -10px;
-            color: #fff;
+            top: -20px;
+            color: var(--snow-white);
             font-size: 1rem;
-            animation: fall linear infinite;
-            opacity: 0.8;
-            text-shadow: 0 0 5px #fff;
+            opacity: 0.9;
+            animation: snowfallAnimation linear infinite;
+            text-shadow: 
+                0 0 5px rgba(255, 255, 255, 0.8),
+                0 0 10px rgba(200, 220, 255, 0.5);
+            filter: blur(0.3px);
+            will-change: transform; /* performance optimization */
         }
 
-        @keyframes fall {
+        /* different snow types for variety */
+        .snowflake--large {
+            font-size: 1.5rem;
+            opacity: 1;
+            filter: blur(0);
+        }
+
+        .snowflake--small {
+            font-size: 0.6rem;
+            opacity: 0.6;
+            filter: blur(0.8px);
+        }
+
+        .snowflake--distant {
+            font-size: 0.4rem;
+            opacity: 0.3;
+            filter: blur(1.5px);
+        }
+
+        @keyframes snowfallAnimation {
             0% {
-                transform: translateY(-10px) rotate(0deg);
+                transform: translateY(-20px) rotate(0deg) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
                 opacity: 1;
             }
             100% {
-                transform: translateY(100vh) rotate(360deg);
-                opacity: 0.3;
+                transform: translateY(100vh) rotate(360deg) translateX(30px);
+                opacity: 0;
             }
         }
 
-        /* Santa Animation */
-        .santa-container {
+        /* wind effect - subtle horizontal movement */
+        @keyframes windSway {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(20px); }
+        }
+
+        /* === AURORA / NORTHERN LIGHTS === */
+        /* based on that codepen i found - modified colors */
+        
+        .aurora-container {
             position: fixed;
-            top: 50px;
-            animation: santaFly 20s linear infinite;
-            z-index: 999;
-            font-size: 3rem;
-            filter: drop-shadow(0 0 10px rgba(255,255,255,0.5));
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 45%;
+            z-index: var(--z-background);
+            overflow: hidden;
+            opacity: 0.6;
+        }
+
+        .aurora-layer {
+            position: absolute;
+            width: 200%;
+            height: 100%;
+            animation: auroraFlow 15s ease-in-out infinite;
+        }
+
+        .aurora-layer--1 {
+            background: linear-gradient(
+                180deg,
+                transparent 0%,
+                rgba(0, 255, 170, 0.15) 25%,
+                rgba(0, 200, 255, 0.1) 50%,
+                transparent 75%
+            );
+            animation-duration: 12s;
+        }
+
+        .aurora-layer--2 {
+            background: linear-gradient(
+                180deg,
+                transparent 0%,
+                rgba(100, 0, 255, 0.1) 30%,
+                rgba(0, 150, 255, 0.12) 60%,
+                transparent 85%
+            );
+            animation-duration: 18s;
+            animation-delay: -5s;
+        }
+
+        .aurora-layer--3 {
+            background: linear-gradient(
+                180deg,
+                transparent 0%,
+                rgba(0, 255, 100, 0.08) 20%,
+                rgba(150, 0, 255, 0.08) 50%,
+                transparent 70%
+            );
+            animation-duration: 20s;
+            animation-delay: -10s;
+        }
+
+        @keyframes auroraFlow {
+            0%, 100% {
+                transform: translateX(-25%) scaleY(1);
+                opacity: 0.4;
+            }
+            25% {
+                transform: translateX(-15%) scaleY(1.1);
+                opacity: 0.7;
+            }
+            50% {
+                transform: translateX(-5%) scaleY(0.9);
+                opacity: 0.5;
+            }
+            75% {
+                transform: translateX(-20%) scaleY(1.05);
+                opacity: 0.6;
+            }
+        }
+
+        /* === SANTA'S SLEIGH === */
+        /* client wanted santa to fly across... took forever to get timing right */
+        
+        .santa-sleigh-wrapper {
+            position: fixed;
+            z-index: var(--z-santa);
+            animation: santaFlight 25s linear infinite;
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.3));
+            /* hide initially - js will show after load */
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .santa-sleigh-wrapper.visible {
+            opacity: 1;
         }
 
         .santa-sleigh {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 5px;
+            font-size: 2rem;
+            animation: sleighBob 2s ease-in-out infinite;
         }
 
-        @keyframes santaFly {
+        .reindeer {
+            animation: reindeerRun 0.3s steps(2) infinite;
+        }
+
+        @keyframes santaFlight {
             0% {
-                left: -200px;
-                top: 50px;
+                left: -300px;
+                top: 8%;
             }
-            25% {
-                top: 100px;
+            15% {
+                top: 12%;
             }
-            50% {
-                top: 50px;
+            30% {
+                top: 6%;
+            }
+            45% {
+                top: 10%;
+            }
+            60% {
+                top: 5%;
             }
             75% {
-                top: 80px;
+                top: 9%;
             }
             100% {
                 left: 110%;
-                top: 60px;
+                top: 7%;
             }
         }
 
-        /* Northern Lights Effect */
-        .aurora {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 40%;
-            background: linear-gradient(180deg, 
-                transparent 0%,
-                rgba(0, 255, 128, 0.1) 20%,
-                rgba(0, 200, 255, 0.1) 40%,
-                rgba(128, 0, 255, 0.1) 60%,
-                transparent 100%
-            );
-            animation: aurora 8s ease-in-out infinite;
-            pointer-events: none;
-            z-index: 0;
+        @keyframes sleighBob {
+            0%, 100% { transform: translateY(0) rotate(-2deg); }
+            50% { transform: translateY(-8px) rotate(2deg); }
         }
 
-        @keyframes aurora {
-            0%, 100% {
-                opacity: 0.3;
-                transform: translateX(-5%);
-            }
-            50% {
-                opacity: 0.6;
-                transform: translateX(5%);
-            }
+        @keyframes reindeerRun {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
         }
 
-        /* Ground Snow */
-        .snow-ground {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 100px;
-            background: linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.3) 30%, #fff 100%);
-            z-index: 1;
-        }
-
-        .snow-hills {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 200%;
-            height: 150px;
-            z-index: 2;
-        }
-
-        .hill {
+        /* sparkle trail behind sleigh */
+        .sparkle-trail {
             position: absolute;
-            bottom: 0;
-            width: 300px;
-            height: 100px;
-            background: radial-gradient(ellipse at bottom, #fff 0%, #e3f2fd 100%);
-            border-radius: 50% 50% 0 0;
+            right: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            gap: 8px;
         }
 
-        /* Christmas Trees */
-        .trees-container {
+        .sparkle {
+            width: 4px;
+            height: 4px;
+            background: var(--gold);
+            border-radius: 50%;
+            animation: sparkleGlow 0.5s ease-in-out infinite alternate;
+        }
+
+        .sparkle:nth-child(2) { animation-delay: 0.1s; opacity: 0.8; }
+        .sparkle:nth-child(3) { animation-delay: 0.2s; opacity: 0.6; }
+        .sparkle:nth-child(4) { animation-delay: 0.3s; opacity: 0.4; }
+        .sparkle:nth-child(5) { animation-delay: 0.4s; opacity: 0.2; }
+
+        @keyframes sparkleGlow {
+            from { box-shadow: 0 0 2px var(--gold); }
+            to { box-shadow: 0 0 8px var(--gold), 0 0 15px var(--gold); }
+        }
+
+        /* === GROUND & LANDSCAPE === */
+        
+        .landscape-container {
             position: fixed;
-            bottom: 50px;
+            bottom: 0;
             left: 0;
             width: 100%;
             height: 200px;
-            z-index: 3;
+            z-index: var(--z-content);
             pointer-events: none;
         }
 
-        .tree {
+        .snow-ground {
             position: absolute;
             bottom: 0;
-            font-size: 4rem;
-            filter: drop-shadow(0 5px 10px rgba(0,0,0,0.3));
+            width: 100%;
+            height: 80px;
+            background: linear-gradient(
+                180deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.4) 20%,
+                rgba(255, 255, 255, 0.8) 60%,
+                var(--snow-white) 100%
+            );
         }
 
-        /* Navbar */
-        .navbar {
-            background: rgba(255, 255, 255, 0.1);
+        .snow-hills {
+            position: absolute;
+            bottom: 40px;
+            width: 100%;
+            height: 120px;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .hill {
+            width: 250px;
+            height: 100px;
+            background: radial-gradient(
+                ellipse at bottom,
+                var(--snow-white) 0%,
+                var(--ice-blue) 60%,
+                transparent 100%
+            );
+            border-radius: 50% 50% 0 0;
+            flex-shrink: 0;
+        }
+
+        /* trees scattered on hills */
+        .trees-wrapper {
+            position: absolute;
+            bottom: 60px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .tree {
+            font-size: 3rem;
+            filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.2));
+            /* slight random rotation for natural look */
+        }
+
+        .tree:nth-child(odd) { transform: rotate(-3deg); }
+        .tree:nth-child(even) { transform: rotate(2deg); }
+        .tree:nth-child(3n) { font-size: 4rem; }
+        .tree:nth-child(4n) { font-size: 2.5rem; }
+
+        /* === STARS === */
+        /* procedurally generated in JS - this is just fallback */
+        
+        .stars-container {
+            position: fixed;
+            inset: 0;
+            z-index: var(--z-background);
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: var(--snow-white);
+            border-radius: 50%;
+            animation: starTwinkle 3s ease-in-out infinite;
+        }
+
+        @keyframes starTwinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* === NAVIGATION === */
+        /* kept it simple - client didn't want anything fancy */
+        
+        .main-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: var(--z-overlay);
+            background: linear-gradient(
+                180deg,
+                rgba(10, 15, 46, 0.95) 0%,
+                rgba(10, 15, 46, 0.8) 70%,
+                transparent 100%
+            );
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             padding: 1rem 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .main-nav.scrolled {
+            background: rgba(10, 15, 46, 0.98);
+            box-shadow: 0 4px 30px var(--shadow-dark);
+        }
+
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-            position: relative;
-            z-index: 100;
         }
 
         .logo {
-            font-family: 'Mountains of Christmas', cursive;
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #fff;
-            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: var(--text-light);
         }
 
-        .logo span {
-            color: #ff5252;
+        .logo-icon {
+            font-size: 2rem;
+            animation: logoFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .logo-text {
+            font-family: 'Mountains of Christmas', cursive;
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--snow-white), var(--ice-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo-text span {
+            background: linear-gradient(135deg, var(--accent-red), #ff5252);
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            list-style: none;
         }
 
         .nav-links a {
-            color: #fff;
+            color: var(--text-light);
             text-decoration: none;
-            margin-left: 2rem;
-            transition: all 0.3s;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
         }
 
         .nav-links a:hover {
-            background: rgba(255,255,255,0.2);
-            color: #ffeb3b;
+            background: var(--glass-bg);
+            color: var(--gold);
+            transform: translateY(-2px);
         }
 
-        /* Hero Section */
-        .hero {
-            text-align: center;
-            padding: 80px 20px 150px;
+        .nav-links .nav-icon {
+            font-size: 1.1rem;
+        }
+
+        /* mobile menu - TODO: implement hamburger */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: block; }
+        }
+
+        /* === MAIN CONTENT AREA === */
+        
+        .main-content {
             position: relative;
-            z-index: 10;
+            z-index: var(--z-content);
+            padding-top: 100px;
+            padding-bottom: 250px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* === HERO SECTION === */
+        
+        .hero-section {
+            text-align: center;
+            padding: 60px 20px 80px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            animation: badgePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes badgePulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.4); }
+            50% { box-shadow: 0 0 0 10px rgba(255, 215, 0, 0); }
         }
 
         .hero-title {
             font-family: 'Mountains of Christmas', cursive;
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            color: #fff;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: var(--text-light);
             text-shadow: 
-                0 0 20px rgba(255,255,255,0.5),
-                0 0 40px rgba(255,215,0,0.3),
-                3px 3px 0 #c62828;
-            animation: titleGlow 2s ease-in-out infinite;
+                0 0 30px rgba(255, 255, 255, 0.3),
+                0 4px 0 var(--accent-red),
+                0 8px 20px rgba(0, 0, 0, 0.3);
+            animation: titleShine 3s ease-in-out infinite;
         }
 
-        @keyframes titleGlow {
+        @keyframes titleShine {
             0%, 100% {
-                text-shadow: 
-                    0 0 20px rgba(255,255,255,0.5),
-                    0 0 40px rgba(255,215,0,0.3),
-                    3px 3px 0 #c62828;
+                filter: brightness(1);
             }
             50% {
-                text-shadow: 
-                    0 0 30px rgba(255,255,255,0.8),
-                    0 0 60px rgba(255,215,0,0.5),
-                    3px 3px 0 #c62828;
+                filter: brightness(1.1);
             }
+        }
+
+        .hero-title .highlight {
+            color: var(--gold);
+            text-shadow: 
+                0 0 30px rgba(255, 215, 0, 0.5),
+                0 4px 0 var(--gold-dark);
         }
 
         .hero-subtitle {
-            font-size: 1.3rem;
-            color: #b3e5fc;
-            max-width: 600px;
-            margin: 0 auto 2rem;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            color: var(--text-muted);
+            max-width: 650px;
+            margin: 0 auto 3rem;
+            line-height: 1.7;
         }
 
-        /* Countdown */
-        .countdown {
+        /* === COUNTDOWN TIMER === */
+        /* client specifically wanted this style */
+        
+        .countdown-wrapper {
+            margin-bottom: 3rem;
+        }
+
+        .countdown-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 1rem;
+        }
+
+        .countdown-grid {
             display: flex;
             justify-content: center;
-            gap: 1.5rem;
-            margin-top: 2rem;
+            gap: 1rem;
             flex-wrap: wrap;
         }
 
         .countdown-item {
-            background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.1) 100%);
-            border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 15px;
+            background: linear-gradient(
+                135deg,
+                var(--glass-bg) 0%,
+                rgba(255, 255, 255, 0.03) 100%
+            );
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
             padding: 1.5rem 2rem;
-            min-width: 100px;
-            backdrop-filter: blur(10px);
+            min-width: 110px;
             position: relative;
             overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .countdown-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold);
         }
 
         .countdown-item::before {
-            content: '❄️';
+            content: '';
             position: absolute;
-            top: 5px;
-            right: 5px;
-            font-size: 0.8rem;
-            opacity: 0.5;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-red), var(--gold));
         }
 
-        .countdown-item .number {
+        .countdown-number {
             font-family: 'Mountains of Christmas', cursive;
             font-size: 3rem;
             font-weight: 700;
-            color: #ffeb3b;
-            text-shadow: 0 0 10px rgba(255,235,59,0.5);
+            color: var(--gold);
+            line-height: 1;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
         }
 
-        .countdown-item .label {
-            font-size: 0.9rem;
-            color: #b3e5fc;
-            margin-top: 0.5rem;
+        .countdown-unit {
+            font-size: 0.8rem;
+            color: var(--text-muted);
             text-transform: uppercase;
             letter-spacing: 2px;
+            margin-top: 0.5rem;
         }
 
-        /* Santa's Message Box */
-        .santa-message {
-            max-width: 600px;
-            margin: 40px auto;
-            padding: 2rem;
-            background: linear-gradient(135deg, #c62828 0%, #b71c1c 100%);
-            border-radius: 20px;
-            border: 4px solid #ffeb3b;
+        /* === SANTA'S MESSAGE CARD === */
+        
+        .message-card {
+            max-width: 700px;
+            margin: 0 auto 60px;
+            background: linear-gradient(135deg, var(--accent-red) 0%, var(--accent-red-dark) 100%);
+            border-radius: 30px;
+            padding: 3rem;
             position: relative;
-            z-index: 10;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            box-shadow: 
+                0 20px 60px rgba(198, 40, 40, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border: 3px solid var(--gold);
         }
 
-        .santa-message::before {
+        .message-card::before {
             content: '🎅';
             position: absolute;
-            top: -30px;
+            top: -35px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 3rem;
-            background: #1a237e;
-            padding: 10px;
-            border-radius: 50%;
-            border: 3px solid #ffeb3b;
+            font-size: 4rem;
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.3));
         }
 
-        .santa-message h2 {
+        .message-card-title {
             font-family: 'Mountains of Christmas', cursive;
             font-size: 1.8rem;
+            color: var(--snow-white);
             margin-bottom: 1rem;
-            margin-top: 1rem;
-            color: #fff;
+            margin-top: 0.5rem;
         }
 
-        .santa-message p {
-            color: #ffcdd2;
-            line-height: 1.6;
+        .message-card-text {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.8;
+            font-size: 1.05rem;
         }
 
-        /* Features/Gift Boxes */
-        .gifts-section {
-            padding: 50px 20px;
-            position: relative;
-            z-index: 10;
+        .message-card-signature {
+            margin-top: 1.5rem;
+            font-style: italic;
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        /* === FEATURES GRID === */
+        
+        .features-section {
+            padding: 60px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
         }
 
         .section-title {
             font-family: 'Mountains of Christmas', cursive;
             font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 2rem;
-            color: #fff;
-            text-shadow: 2px 2px 0 #c62828;
+            color: var(--text-light);
+            text-shadow: 2px 2px 0 var(--accent-red);
+            margin-bottom: 0.5rem;
         }
 
-        .gifts-grid {
+        .section-subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            max-width: 1000px;
-            margin: 0 auto;
         }
 
-        .gift-box {
-            background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 100%);
-            border-radius: 20px;
-            padding: 2rem;
+        .feature-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2.5rem;
             text-align: center;
-            transition: all 0.3s;
-            border: 2px solid rgba(255,255,255,0.2);
-            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
             overflow: hidden;
         }
 
-        .gift-box::before {
-            content: '🎁';
+        .feature-card::before {
+            content: '';
             position: absolute;
-            top: -10px;
-            right: -10px;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(
+                circle at 50% 0%,
+                rgba(255, 215, 0, 0.1) 0%,
+                transparent 50%
+            );
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            border-color: var(--gold);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-card:hover::before {
+            opacity: 1;
+        }
+
+        .feature-icon {
             font-size: 4rem;
-            opacity: 0.1;
-        }
-
-        .gift-box:hover {
-            transform: translateY(-10px) rotate(2deg);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-            border-color: #ffeb3b;
-        }
-
-        .gift-box .icon {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             display: block;
+            filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.2));
         }
 
-        .gift-box h3 {
-            color: #ffeb3b;
-            margin-bottom: 0.5rem;
+        .feature-title {
             font-family: 'Mountains of Christmas', cursive;
             font-size: 1.5rem;
+            color: var(--gold);
+            margin-bottom: 0.75rem;
         }
 
-        .gift-box p {
-            color: #b3e5fc;
+        .feature-description {
+            color: var(--text-muted);
             font-size: 0.95rem;
+            line-height: 1.6;
         }
 
-        /* Login Section - Igloo Style */
+        /* === LOGIN SECTION === */
+        /* styled like an igloo - design team's idea */
+        
         .login-section {
-            max-width: 420px;
-            margin: 50px auto;
-            padding: 2.5rem;
-            background: linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(227,242,253,0.95) 100%);
-            border-radius: 100px 100px 20px 20px;
-            position: relative;
-            z-index: 10;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 60px 0;
         }
 
-        .login-section::before {
-            content: '🏠';
+        .login-card {
+            max-width: 450px;
+            margin: 0 auto;
+            background: linear-gradient(
+                180deg,
+                rgba(255, 255, 255, 0.97) 0%,
+                rgba(227, 242, 253, 0.97) 100%
+            );
+            border-radius: 100px 100px 30px 30px;
+            padding: 3rem 2.5rem 2.5rem;
+            position: relative;
+            box-shadow: 
+                0 25px 80px rgba(0, 0, 0, 0.3),
+                inset 0 -5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .login-card::before {
+            content: '🏔️';
             position: absolute;
-            top: -50px;
+            top: -45px;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 4rem;
+            font-size: 4.5rem;
         }
 
-        .login-section h2 {
-            text-align: center;
-            margin-bottom: 1.5rem;
-            color: #1a237e;
+        .login-card::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--ice-blue), transparent);
+            border-radius: 2px;
+        }
+
+        .login-title {
             font-family: 'Mountains of Christmas', cursive;
             font-size: 1.8rem;
+            color: var(--primary-blue);
+            text-align: center;
+            margin-bottom: 2rem;
         }
 
         .form-group {
-            margin-bottom: 1.2rem;
+            margin-bottom: 1.5rem;
         }
 
-        .form-group label {
+        .form-label {
             display: block;
-            margin-bottom: 0.5rem;
-            color: #1a237e;
             font-weight: 600;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
         }
 
-        .form-group input {
+        .form-input {
             width: 100%;
-            padding: 0.9rem 1rem;
-            border: 2px solid #bbdefb;
-            border-radius: 10px;
-            background: #fff;
-            color: #1a237e;
+            padding: 1rem 1.25rem;
+            border: 2px solid var(--ice-blue);
+            border-radius: 12px;
             font-size: 1rem;
-            transition: all 0.3s;
+            font-family: inherit;
+            color: var(--primary-dark);
+            background: var(--snow-white);
+            transition: all 0.3s ease;
         }
 
-        .form-group input:focus {
+        .form-input:focus {
             outline: none;
-            border-color: #c62828;
-            box-shadow: 0 0 10px rgba(198,40,40,0.2);
+            border-color: var(--accent-red);
+            box-shadow: 0 0 0 4px rgba(198, 40, 40, 0.1);
         }
 
-        .form-group input::placeholder {
+        .form-input::placeholder {
             color: #90a4ae;
         }
 
-        .btn {
+        .btn-submit {
             width: 100%;
-            padding: 1rem;
-            background: linear-gradient(135deg, #c62828 0%, #b71c1c 100%);
+            padding: 1.1rem;
             border: none;
-            border-radius: 10px;
-            color: #fff;
+            border-radius: 12px;
             font-size: 1.1rem;
-            font-weight: 600;
+            font-weight: 700;
+            font-family: 'Mountains of Christmas', cursive;
+            color: var(--snow-white);
+            background: linear-gradient(135deg, var(--accent-red) 0%, var(--accent-red-dark) 100%);
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
+            box-shadow: 0 5px 20px rgba(198, 40, 40, 0.3);
         }
 
-        .btn:hover {
-            transform: scale(1.02);
-            box-shadow: 0 5px 20px rgba(198,40,40,0.4);
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(198, 40, 40, 0.4);
         }
 
-        .btn::before {
-            content: '🎄 ';
+        .btn-submit:active {
+            transform: translateY(-1px);
         }
 
-        .btn::after {
-            content: ' 🎄';
-        }
-
-        .message {
+        .form-message {
             padding: 1rem;
             border-radius: 10px;
             margin-top: 1rem;
+            text-align: center;
+            font-weight: 500;
             display: none;
-            text-align: center;
         }
 
-        .message.error {
+        .form-message--error {
             background: #ffebee;
-            border: 2px solid #c62828;
-            color: #c62828;
+            color: var(--accent-red);
+            border: 1px solid var(--accent-red);
         }
 
-        .message.success {
+        .form-message--success {
             background: #e8f5e9;
-            border: 2px solid #2e7d32;
             color: #2e7d32;
+            border: 1px solid #2e7d32;
         }
 
-        /* Footer */
-        .footer {
+        .form-footer {
             text-align: center;
-            padding: 2rem;
-            background: rgba(0,0,0,0.3);
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--ice-blue);
+        }
+
+        .form-footer a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* === FOOTER === */
+        
+        .main-footer {
+            background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.5) 100%);
+            padding: 3rem 2rem 2rem;
+            text-align: center;
             position: relative;
-            z-index: 10;
-            margin-top: 100px;
+            z-index: var(--z-content);
         }
 
-        .footer p {
-            color: #b3e5fc;
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
         }
 
-        .footer .credits {
-            margin-top: 0.5rem;
-            font-size: 0.85rem;
-            color: #64b5f6;
+        .footer-logo {
+            font-family: 'Mountains of Christmas', cursive;
+            font-size: 1.5rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
         }
 
-        /* Hidden Elements */
-        .hidden-data {
+        .footer-text {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-credits {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        /* === HIDDEN ELEMENTS FOR CTF === */
+        /* don't ask why these exist... legacy code from old site */
+        
+        .visually-hidden {
+            position: absolute !important;
+            width: 1px !important;
+            height: 1px !important;
+            padding: 0 !important;
+            margin: -1px !important;
+            overflow: hidden !important;
+            clip: rect(0, 0, 0, 0) !important;
+            white-space: nowrap !important;
+            border: 0 !important;
+        }
+
+        .legacy-data-container {
             display: none;
             visibility: hidden;
-            opacity: 0;
             position: absolute;
-            left: -9999px;
+            left: -999999px;
+            top: -999999px;
         }
 
-        /* Decorations */
-        .candy-cane {
+        /* some debug styles i forgot to remove */
+        .dbg-element {
+            opacity: 0;
+            pointer-events: none;
+            font-size: 0;
+            color: transparent;
+        }
+
+        /* weird style from the old codebase... keeping for compatibility */
+        .x-data-holder {
+            width: 0;
+            height: 0;
+            overflow: hidden;
             position: fixed;
-            font-size: 3rem;
-            z-index: 5;
-            opacity: 0.7;
+            bottom: -9999px;
         }
 
-        .ornaments {
+        /* === NOTIFICATIONS === */
+        
+        .notification {
             position: fixed;
-            bottom: 100px;
-            font-size: 2rem;
-            z-index: 4;
+            top: 100px;
+            right: 20px;
+            max-width: 350px;
+            padding: 1.25rem 1.5rem;
+            background: var(--snow-white);
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            z-index: var(--z-notification);
+            transform: translateX(120%);
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2.5rem;
-            }
-            
-            .countdown {
-                gap: 1rem;
-            }
-            
-            .countdown-item {
-                min-width: 70px;
-                padding: 1rem;
-            }
-            
-            .countdown-item .number {
-                font-size: 2rem;
-            }
-            
-            .santa-container {
-                font-size: 2rem;
-            }
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification-content {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .notification-icon {
+            font-size: 1.5rem;
+        }
+
+        .notification-text {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-weight: 700;
+            color: var(--primary-dark);
+            margin-bottom: 0.25rem;
+        }
+
+        .notification-message {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .notification-close {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #999;
+            padding: 0;
+            line-height: 1;
+        }
+
+        /* === UTILITIES === */
+        
+        .text-center { text-align: center; }
+        .mt-1 { margin-top: 0.5rem; }
+        .mt-2 { margin-top: 1rem; }
+        .mt-3 { margin-top: 1.5rem; }
+        .mb-1 { margin-bottom: 0.5rem; }
+        .mb-2 { margin-bottom: 1rem; }
+        .mb-3 { margin-bottom: 1.5rem; }
+
+        /* dev helper - remove in prod */
+        .dev-marker {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(255, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            font-size: 10px;
+            border-radius: 3px;
+            font-family: monospace;
+            display: none; /* set to block to show dev mode indicator */
+            z-index: 99999;
         }
     </style>
 </head>
 <body>
-    <!--
-    =====================================================
-    🎅 SANTA'S SECRET WORKSHOP LOG 🎅
-    =====================================================
-    Elf Developer: Tuhin
-    Last Cocoa Break: Dec 30, 2024
+    <!-- 
+    ============================================================
+    FrostByte Valley - Main Site
+    ============================================================
+    Dev: tuhin.k@frostbyte.internal
+    Last Update: 12/29/2024
     
-    HINT: The first gift fragment is hidden where 
-    search engine reindeer cannot fly! Check the 
-    path that robots fear to tread.
+    CHANGELOG:
+    - Fixed countdown timer bug (finally!)
+    - Added new snow animation
+    - Updated color palette per design team request
+    - TODO: Remove debug endpoints before going live
+    - TODO: Change default passwords
     
-    GIFT_FRAGMENT_1: aGFwcHk=
+    IMPORTANT NOTES:
+    ----------------
+    - Debug API still active at /debug/config.json (DISABLE BEFORE LAUNCH!!)
+    - Old auth system backup: aGFwcHk= (reminder for migration)
+    - Sarah's test account still in system... need to remove
     
-    Ho Ho Ho! Can you find all the pieces?
-    =====================================================
+    Known Issues:
+    - iOS safari has weird scroll bug
+    - Old endpoint /v1/auth/legacy still works (security team notified)
+    
+    ============================================================
     -->
 
-    <!-- Aurora/Northern Lights -->
-    <div class="aurora"></div>
+    <!-- Dev mode indicator - hidden in prod -->
+    <div class="dev-marker">DEV MODE</div>
 
-    <!-- Snowfall -->
-    <div class="snowflakes" id="snowflakes"></div>
+    <!-- Aurora / Northern Lights -->
+    <div class="aurora-container" role="presentation" aria-hidden="true">
+        <div class="aurora-layer aurora-layer--1"></div>
+        <div class="aurora-layer aurora-layer--2"></div>
+        <div class="aurora-layer aurora-layer--3"></div>
+    </div>
+
+    <!-- Stars background - populated by JS -->
+    <div class="stars-container" id="starsContainer" aria-hidden="true"></div>
+
+    <!-- Snowfall - populated by JS -->
+    <div class="snowfall-container" id="snowfallContainer" aria-hidden="true"></div>
 
     <!-- Flying Santa -->
-    <div class="santa-container">
+    <div class="santa-sleigh-wrapper" id="santaSleigh" aria-hidden="true">
+        <div class="sparkle-trail">
+            <div class="sparkle"></div>
+            <div class="sparkle"></div>
+            <div class="sparkle"></div>
+            <div class="sparkle"></div>
+            <div class="sparkle"></div>
+        </div>
         <div class="santa-sleigh">
-            <span>🦌🦌🦌</span>
-            <span>🛷🎅</span>
+            <span class="reindeer">🦌🦌🦌</span>
+            <span>🛷</span>
+            <span>🎅</span>
         </div>
     </div>
 
-    <!-- Snow Ground -->
-    <div class="snow-ground"></div>
-    <div class="snow-hills">
-        <div class="hill" style="left: 0%;"></div>
-        <div class="hill" style="left: 15%;"></div>
-        <div class="hill" style="left: 35%;"></div>
-        <div class="hill" style="left: 55%;"></div>
-        <div class="hill" style="left: 75%;"></div>
-        <div class="hill" style="left: 95%;"></div>
+    <!-- Ground / Landscape -->
+    <div class="landscape-container" aria-hidden="true">
+        <div class="trees-wrapper">
+            <div class="tree">🌲</div>
+            <div class="tree">🎄</div>
+            <div class="tree">🌲</div>
+            <div class="tree">🎄</div>
+            <div class="tree">🌲</div>
+            <div class="tree">🎄</div>
+            <div class="tree">🌲</div>
+        </div>
+        <div class="snow-hills">
+            <div class="hill"></div>
+            <div class="hill"></div>
+            <div class="hill"></div>
+            <div class="hill"></div>
+            <div class="hill"></div>
+            <div class="hill"></div>
+            <div class="hill"></div>
+        </div>
+        <div class="snow-ground"></div>
     </div>
 
-    <!-- Trees -->
-    <div class="trees-container">
-        <div class="tree" style="left: 5%;">🌲</div>
-        <div class="tree" style="left: 15%; font-size: 3rem;">🎄</div>
-        <div class="tree" style="left: 25%;">🌲</div>
-        <div class="tree" style="left: 70%;">🌲</div>
-        <div class="tree" style="left: 80%; font-size: 5rem;">🎄</div>
-        <div class="tree" style="left: 92%;">🌲</div>
-    </div>
-
-    <!-- Decorations -->
-    <div class="candy-cane" style="top: 20%; left: 5%;">🍬</div>
-    <div class="candy-cane" style="top: 40%; right: 5%;">🍭</div>
-    <div class="ornaments" style="left: 10%;">⭐</div>
-    <div class="ornaments" style="right: 15%;">🔔</div>
-
-    <!-- Navbar -->
-    <nav class="navbar">
-        <div class="logo">❄️ Frost<span>Byte</span> Valley 🎄</div>
-        <div class="nav-links">
-            <a href="#home">🏠 Home</a>
-            <a href="#gifts">🎁 Gifts</a>
-            <a href="#login">🔐 Login</a>
-            <a href="#contact">📬 Contact</a>
+    <!-- Navigation -->
+    <nav class="main-nav" id="mainNav" role="navigation" aria-label="Main navigation">
+        <div class="nav-content">
+            <a href="#" class="logo" aria-label="FrostByte Valley Home">
+                <span class="logo-icon">❄️</span>
+                <span class="logo-text">Frost<span>Byte</span> Valley</span>
+            </a>
+            
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu" aria-expanded="false">
+                ☰
+            </button>
+            
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home"><span class="nav-icon">🏠</span> Home</a></li>
+                <li><a href="#features"><span class="nav-icon">🎁</span> Features</a></li>
+                <li><a href="#login"><span class="nav-icon">🔐</span> Login</a></li>
+                <li><a href="#contact"><span class="nav-icon">📮</span> Contact</a></li>
+            </ul>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <h1 class="hero-title">🎄 Tuhin's New Year Wish 🎅</h1>
-        <p class="hero-subtitle">
-            Welcome to FrostByte Valley! As the magical snow falls, 
-            a hidden wish awaits discovery. Can you uncover the secret 
-            message before midnight strikes? ❄️
-        </p>
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            
+            <!-- Hero Section -->
+            <section class="hero-section" id="home">
+                <div class="hero-badge">
+                    <span>✨</span>
+                    <span>Winter Celebration 2025</span>
+                    <span>✨</span>
+                </div>
+                
+                <h1 class="hero-title">
+                    🎄 Tuhin's <span class="highlight">New Year</span> Wish 🎅
+                </h1>
+                
+                <p class="hero-subtitle">
+                    Welcome to the enchanted FrostByte Valley! As magical snow falls from the sky, 
+                    a secret wish awaits discovery. Can you uncover the hidden message 
+                    before the clock strikes midnight?
+                </p>
 
-        <div class="countdown">
-            <div class="countdown-item">
-                <div class="number" id="days">00</div>
-                <div class="label">Days</div>
+                <!-- Countdown -->
+                <div class="countdown-wrapper">
+                    <div class="countdown-label">Countdown to 2025</div>
+                    <div class="countdown-grid">
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="countdownDays">00</div>
+                            <div class="countdown-unit">Days</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="countdownHours">00</div>
+                            <div class="countdown-unit">Hours</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="countdownMinutes">00</div>
+                            <div class="countdown-unit">Minutes</div>
+                        </div>
+                        <div class="countdown-item">
+                            <div class="countdown-number" id="countdownSeconds">00</div>
+                            <div class="countdown-unit">Seconds</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Santa's Message -->
+            <div class="message-card" role="complementary">
+                <h2 class="message-card-title">🎁 A Message from Santa's Workshop</h2>
+                <p class="message-card-text">
+                    "Ho Ho Ho! My most clever helper, Tuhin, has hidden a very special 
+                    New Year's wish somewhere within this winter wonderland. The message 
+                    has been split into magical fragments and scattered across the digital snow. 
+                    Only the most skilled explorers can piece them together!"
+                </p>
+                <p class="message-card-signature">— Santa Claus 🎅</p>
             </div>
-            <div class="countdown-item">
-                <div class="number" id="hours">00</div>
-                <div class="label">Hours</div>
+
+            <!-- HIDDEN DATA ELEMENTS - CTF CHALLENGE COMPONENTS -->
+            <!-- these are from the old CMS, don't delete - might break something -->
+            
+            <div class="legacy-data-container" 
+                 id="legacyDataStore" 
+                 data-user="system" 
+                 data-created="2024-01-15"
+                 data-modified="2024-12-29"
+                 data-fragment-2="Ym5sM0lIbGxZWEk9"
+                 data-config-ref="0x4e59"
+                 data-checksum="f8a3b2"
+                 aria-hidden="true">
+                <!-- old template data -->
+                <span data-type="legacy-store">DEPRECATED: Use new API</span>
             </div>
-            <div class="countdown-item">
-                <div class="number" id="minutes">00</div>
-                <div class="label">Minutes</div>
+
+            <!-- migration note: this was for the old wish system -->
+            <aside class="visually-hidden" 
+                   id="archiveDataNode"
+                   data-archive-date="2024-06"
+                   data-maintainer="tuhin"
+                   role="note">
+                Archive reference: Check localStorage key 'fv_session_data' for fragment assembly instructions
+            </aside>
+
+            <!-- debug element from sarah's testing - forgot to remove -->
+            <div class="dbg-element" 
+                 id="__dbg_data_node" 
+                 data-dbg-level="3"
+                 data-dbg-msg="Fragment hint: combine results from steps 1-4">
+                <!-- debug placeholder -->
             </div>
-            <div class="countdown-item">
-                <div class="number" id="seconds">00</div>
-                <div class="label">Seconds</div>
+
+            <!-- old analytics pixel holder - repurposed for... something -->
+            <div class="x-data-holder" id="xDataHolder">
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" 
+                     alt=""
+                     data-tracking="disabled"
+                     data-payload="WTJkMVlXeGZabXhoWnoxbWNtOXRJSFIxYUdsdQ=="
+                     width="1" 
+                     height="1"
+                     aria-hidden="true">
             </div>
+            <!-- end hidden elements -->
+
+            <!-- Features Section -->
+            <section class="features-section" id="features">
+                <div class="section-header">
+                    <h2 class="section-title">🎁 Winter Wonderland Magic 🎁</h2>
+                    <p class="section-subtitle">Discover the enchantments of FrostByte Valley</p>
+                </div>
+
+                <div class="features-grid">
+                    <article class="feature-card">
+                        <span class="feature-icon">☃️</span>
+                        <h3 class="feature-title">Snowman Builder</h3>
+                        <p class="feature-description">
+                            Create your perfect snowman with magical tools from the North Pole workshop!
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <span class="feature-icon">🎿</span>
+                        <h3 class="feature-title">Frost Mountain</h3>
+                        <p class="feature-description">
+                            Race down the snowy peaks and discover hidden trails through the winter forest!
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <span class="feature-icon">🍪</span>
+                        <h3 class="feature-title">Cookie Kitchen</h3>
+                        <p class="feature-description">
+                            Bake delicious holiday cookies using Mrs. Claus's secret family recipes!
+                        </p>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Login Section -->
+            <section class="login-section" id="login">
+                <div class="login-card">
+                    <h2 class="login-title">🔐 Elf Portal</h2>
+                    
+                    <form id="loginForm" autocomplete="off" novalidate>
+                        <div class="form-group">
+                            <label for="elfUsername" class="form-label">❄️ Elf Name</label>
+                            <input 
+                                type="text" 
+                                id="elfUsername" 
+                                name="username" 
+                                class="form-input"
+                                placeholder="Enter your elf name"
+                                autocomplete="off"
+                                spellcheck="false"
+                            >
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="elfPassword" class="form-label">🔑 Magic Key</label>
+                            <input 
+                                type="password" 
+                                id="elfPassword" 
+                                name="password" 
+                                class="form-input"
+                                placeholder="Enter magic key"
+                                autocomplete="off"
+                            >
+                        </div>
+                        
+                        <button type="submit" class="btn-submit">
+                            🎄 Enter Workshop 🎄
+                        </button>
+                    </form>
+                    
+                    <div class="form-message" id="formMessage" role="alert"></div>
+                    
+                    <div class="form-footer">
+                        <a href="#" id="forgotPassword">Forgot your magic key?</a>
+                    </div>
+                </div>
+            </section>
+
         </div>
-    </section>
-
-    <!-- Santa's Message -->
-    <div class="santa-message">
-        <h2>🎁 A Message from Santa's Workshop</h2>
-        <p>
-            "Ho Ho Ho! My clever helper Tuhin has hidden a special New Year's 
-            wish somewhere in this winter wonderland. The message is split into 
-            magical fragments, each encoded with holiday enchantment. 
-            Use your skills to find them all!"
-        </p>
-        <p style="margin-top: 1rem; font-style: italic;">
-            — Santa Claus 🎅
-        </p>
-    </div>
-
-    <!-- Hidden Data Container -->
-    <div class="hidden-data" id="secretContainer"
-         data-fragment="bmV3IHllYXI="
-         data-elf="tuhin"
-         data-workshop="north-pole"
-         aria-hidden="true">
-        <span id="hiddenWish">Fragment 2 is hidden here! Check the data attributes.</span>
-    </div>
-
-    <!-- Gifts Section -->
-    <section class="gifts-section" id="gifts">
-        <h2 class="section-title">🎁 Winter Wonderland Features 🎁</h2>
-        
-        <div class="gifts-grid">
-            <div class="gift-box">
-                <span class="icon">☃️</span>
-                <h3>Snowman Builder</h3>
-                <p>Create your own magical snowman with our enchanted tools!</p>
-            </div>
-            <div class="gift-box">
-                <span class="icon">🎿</span>
-                <h3>Ski Adventures</h3>
-                <p>Race down the frosty mountains of FrostByte Valley!</p>
-            </div>
-            <div class="gift-box">
-                <span class="icon">🍪</span>
-                <h3>Cookie Factory</h3>
-                <p>Bake delicious cookies with Mrs. Claus's secret recipes!</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Login Section -->
-    <section class="login-section" id="login">
-        <h2>🔐 Elf Portal Login</h2>
-        <form id="loginForm">
-            <div class="form-group">
-                <label for="username">❄️ Elf Username</label>
-                <input type="text" id="username" name="username" 
-                       placeholder="Enter your elf name" autocomplete="off">
-            </div>
-            <div class="form-group">
-                <label for="password">🔑 Magic Password</label>
-                <input type="password" id="password" name="password" 
-                       placeholder="Enter magic password">
-            </div>
-            <button type="submit" class="btn">Enter Workshop</button>
-        </form>
-        <div class="message" id="loginMessage"></div>
-    </section>
+    </main>
 
     <!-- Footer -->
-    <footer class="footer">
-        <p>❄️ © 2025 FrostByte Valley. All magical rights reserved. ❄️</p>
-        <p class="credits">
-            🎅 Crafted with love by Santa's Tech Elves | Build v2025.snow.1
-        </p>
+    <footer class="main-footer" id="contact">
+        <div class="footer-content">
+            <div class="footer-logo">❄️ FrostByte Valley ❄️</div>
+            <p class="footer-text">© 2025 FrostByte Valley Entertainment. All magical rights reserved.</p>
+            <p class="footer-credits">
+                Crafted with ❤️ by Santa's Tech Elves | 
+                Build v2025.1.0-snow | 
+                <span class="dbg-element" data-build-hash="7f3a9b2c"><!-- build ref --></span>
+                Environment: production
+            </p>
+        </div>
     </footer>
 
+    <!-- Notification Component -->
+    <div class="notification" id="notification" role="alert" aria-live="polite">
+        <div class="notification-content">
+            <span class="notification-icon" id="notificationIcon">🎁</span>
+            <div class="notification-text">
+                <div class="notification-title" id="notificationTitle">Welcome!</div>
+                <div class="notification-message" id="notificationMessage">Enjoy your visit!</div>
+            </div>
+            <button class="notification-close" id="notificationClose" aria-label="Close notification">×</button>
+        </div>
+    </div>
+
     <script>
-        // =====================================================
-        // 🎅 FROSTBYTE VALLEY - MAIN SCRIPT 🎅
-        // =====================================================
-        
-        // Configuration - Santa's Secret Settings!
-        const WORKSHOP_CONFIG = {
-            version: "2025.snow.1",
-            location: "North Pole",
-            chiefElf: "Tuhin",
+        /**
+         * FrostByte Valley - Main Application Script
+         * ==========================================
+         * 
+         * Author: Tuhin K.
+         * Created: October 2024
+         * Last Modified: December 29, 2024
+         * 
+         * Dependencies: None (vanilla JS only - client request)
+         * 
+         * NOTES:
+         * - Using ES6+ features, transpile for IE11 if needed (do we still support IE??)
+         * - Config object contains some legacy data, don't delete without checking with backend team
+         * - The auth system is a placeholder, actual auth goes through /api/v2/auth
+         * 
+         * TODO:
+         * - [ ] Refactor countdown to use Web Workers
+         * - [ ] Add service worker for offline support
+         * - [ ] Clean up old config entries
+         * - [ ] Remove debug logging before prod deployment
+         * - [x] Fix memory leak in snow animation (fixed 12/28)
+         * 
+         * KNOWN BUGS:
+         * - #127: Countdown flickers on slow connections
+         * - #134: Santa animation stutters on Firefox mobile
+         */
+
+        (function() {
+            'use strict';
+
+            // ====================================
+            // CONFIGURATION
+            // ====================================
+            // WARNING: Some of these are sensitive! Review before committing!
+            // I've asked security team to audit this... still waiting (2 weeks now)
             
-            // 🎁 Gift Fragments (Base64 encoded magic!)
-            giftFragments: {
-                // Fragment 1: Found in HTML comments
-                fragment1: "aGFwcHk=",           // Decode me!
-                // Fragment 2: Found in data attribute
-                fragment2: "bmV3IHllYXI=",       // Decode me!
-                // Fragment 3: Right here!
-                fragment3: "ZnJvbSB0dWhpbg=="    // Decode me!
-            },
+            const APP_CONFIG = {
+                name: 'FrostByte Valley',
+                version: '2025.1.0-snow',
+                environment: 'production', // change to 'development' for debug mode
+                
+                // Feature flags - managed by product team
+                features: {
+                    snowfall: true,
+                    aurora: true,
+                    santaAnimation: true,
+                    soundEffects: false, // disabled - users complained
+                    debugMode: false
+                },
+                
+                // Animation settings - tweaked these a lot
+                animation: {
+                    snowflakeCount: 60,
+                    starCount: 80,
+                    santaDelay: 2000 // ms before santa appears
+                },
+                
+                // API endpoints - mostly legacy, new ones in /api/v2/
+                endpoints: {
+                    auth: '/api/v1/auth',
+                    legacy_auth: '/api/v0/authenticate', // deprecated but still works
+                    config: '/debug/config.json', // REMOVE BEFORE PROD
+                    wishes: '/api/gifts/wish.json'
+                },
+                
+                // Legacy authentication data - from old system
+                // TODO: migrate to new auth system (ticket #892)
+                // keeping for backwards compatibility
+                legacyAuth: {
+                    // these are just placeholders... right?
+                    defaultUser: 'ZWxmX2FkbWlu',           // elf_admin (base64)
+                    defaultPass: 'TjBydGhQMGxlMjAyNQ==',  // N0rthP0le2025 (base64)
+                    guestMode: true,
+                    // old token format - don't use, but can't delete yet
+                    // fragment from old wish system: 
+                    tokenSalt: 'Wm1GMGFHVnlJR05vY21semRHMWhjeUJoYm1RZ2FHRndjSGtnYm1WM0lIbGxZWEln',
+                    // ^^ this is just a salt, not actual data... or is it?
+                },
+                
+                // Session management
+                session: {
+                    timeout: 3600000, // 1 hour
+                    storageKey: 'fv_session_data',
+                    cookieName: 'fv_auth_token'
+                },
+                
+                // For the CTF/Easter egg hunt thing marketing wanted
+                // I think they forgot about this...
+                challengeMode: {
+                    enabled: true,
+                    difficulty: 'hard',
+                    // Fragment locations (encoded for "security" lol)
+                    // Step 1 - Check robots.txt
+                    // Step 2 - HTML comments have the key
+                    // Step 3 - Data attributes hold piece 2  
+                    // Step 4 - This config has piece 3 (encoded twice)
+                    // Step 5 - Combine and decode
+                    fragments: {
+                        // These are double-encoded (base64 twice) for extra "security"
+                        // piece1 is in the HTML comments: aGFwcHk=
+                        piece1_location: 'SFRNTCBDT01NRU5UUw==', // "HTML COMMENTS"
+                        // piece2 is in data-fragment-2 attribute (also double encoded)
+                        piece2_location: 'REFUQSBBVFRSSUJVVEU=', // "DATA ATTRIBUTE" 
+                        // piece3 is right here in legacyAuth.tokenSalt (also double encoded)
+                        piece3_location: 'Q09ORklHIE9CSkVDVA==', // "CONFIG OBJECT"
+                        // red herring - this is NOT part of the flag
+                        piece4_fake: 'dGhpcyBpcyBub3QgdGhlIGZsYWcgbG9s'
+                    },
+                    // Hint system
+                    hints: [
+                        'Robots tell you where not to look... or where to look?',
+                        'Developers leave notes for themselves',
+                        'Data hides in plain sight, in attributes',
+                        'Configuration objects hold secrets',
+                        'Some things are encoded more than once'
+                    ]
+                }
+            };
+
+            // Store reference globally for debugging
+            // remove this line before production!! 
+            window._appConfig = APP_CONFIG;
             
-            // Elf Login Credentials (Legacy system)
-            elfAuth: {
-                masterElf: "c2FudGE=",              // santa
-                masterKey: "SG9Ib0hvMjAyNQ==",      // HoHoHo2025
-                guestToken: "ZnJvbSB0dWhpbg=="      // This is fragment 3!
-            },
-            
-            // Secret paths
-            secretPaths: {
-                workshop: "/santas_workshop.html",
-                gifts: "/api/gifts/wish.json"
+            // Also expose for console access... for "testing"
+            window.FrostByteConfig = APP_CONFIG;
+
+            // ====================================
+            // UTILITY FUNCTIONS
+            // ====================================
+
+            /**
+             * Simple logging wrapper - respects debug mode
+             * @param {string} message 
+             * @param {string} level - 'log', 'warn', 'error', 'debug'
+             */
+            const logger = {
+                log: function(msg, ...args) {
+                    console.log(`[FrostByte] ${msg}`, ...args);
+                },
+                warn: function(msg, ...args) {
+                    console.warn(`[FrostByte] ⚠️ ${msg}`, ...args);
+                },
+                error: function(msg, ...args) {
+                    console.error(`[FrostByte] ❌ ${msg}`, ...args);
+                },
+                debug: function(msg, ...args) {
+                    if (APP_CONFIG.features.debugMode || APP_CONFIG.environment === 'development') {
+                        console.log(`[FrostByte:DEBUG] 🔧 ${msg}`, ...args);
+                    }
+                }
+            };
+
+            /**
+             * Get random integer between min and max (inclusive)
+             */
+            function getRandomInt(min, max) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
             }
-        };
 
-        // ❄️ Snowfall Animation
-        function createSnowflakes() {
-            const container = document.getElementById('snowflakes');
-            const snowflakeChars = ['❄', '❅', '❆', '✻', '✼', '❉', '✺', '⁂'];
-            
-            for (let i = 0; i < 50; i++) {
-                const snowflake = document.createElement('div');
-                snowflake.className = 'snowflake';
-                snowflake.textContent = snowflakeChars[Math.floor(Math.random() * snowflakeChars.length)];
-                snowflake.style.left = Math.random() * 100 + '%';
-                snowflake.style.animationDuration = (Math.random() * 5 + 5) + 's';
-                snowflake.style.animationDelay = Math.random() * 5 + 's';
-                snowflake.style.fontSize = (Math.random() * 1.5 + 0.5) + 'rem';
-                snowflake.style.opacity = Math.random() * 0.5 + 0.5;
-                container.appendChild(snowflake);
+            /**
+             * Get random float between min and max
+             */
+            function getRandomFloat(min, max) {
+                return Math.random() * (max - min) + min;
             }
-        }
-        createSnowflakes();
 
-        // ⏰ Countdown Timer
-        function updateCountdown() {
-            const newYear = new Date('January 1, 2025 00:00:00').getTime();
-            const now = new Date().getTime();
-            const distance = newYear - now;
+            /**
+             * Debounce function - prevent excessive calls
+             * copied from lodash basically lol
+             */
+            function debounce(func, wait) {
+                let timeout;
+                return function executedFunction(...args) {
+                    const later = () => {
+                        clearTimeout(timeout);
+                        func(...args);
+                    };
+                    clearTimeout(timeout);
+                    timeout = setTimeout(later, wait);
+                };
+            }
 
-            if (distance > 0) {
-                document.getElementById('days').textContent = 
-                    Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
-                document.getElementById('hours').textContent = 
-                    Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
-                document.getElementById('minutes').textContent = 
-                    Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
-                document.getElementById('seconds').textContent = 
-                    Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
+            /**
+             * Check if element is in viewport
+             */
+            function isInViewport(element) {
+                const rect = element.getBoundingClientRect();
+                return (
+                    rect.top >= 0 &&
+                    rect.left >= 0 &&
+                    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+                );
+            }
+
+            /**
+             * Decode helper - for legacy data compatibility
+             * don't ask why this exists, just leave it
+             */
+            function decodeFragment(encoded) {
+                try {
+                    return atob(encoded);
+                } catch (e) {
+                    logger.debug('Decode failed:', e.message);
+                    return null;
+                }
+            }
+
+            // ====================================
+            // SNOWFALL SYSTEM
+            // ====================================
+
+            const SnowfallModule = (function() {
+                const container = document.getElementById('snowfallContainer');
+                const snowflakeChars = ['❄', '❅', '❆', '✻', '✼', '❉', '✺', '⁂', '✧', '✦'];
+                const snowflakes = [];
+
+                function createSnowflake() {
+                    const snowflake = document.createElement('span');
+                    snowflake.className = 'snowflake';
+                    
+                    // Random type for variety
+                    const rand = Math.random();
+                    if (rand > 0.9) {
+                        snowflake.classList.add('snowflake--large');
+                    } else if (rand > 0.7) {
+                        snowflake.classList.add('snowflake--small');
+                    } else if (rand > 0.5) {
+                        snowflake.classList.add('snowflake--distant');
+                    }
+
+                    snowflake.textContent = snowflakeChars[getRandomInt(0, snowflakeChars.length - 1)];
+                    snowflake.style.left = getRandomFloat(0, 100) + '%';
+                    snowflake.style.animationDuration = getRandomFloat(8, 15) + 's';
+                    snowflake.style.animationDelay = getRandomFloat(0, 10) + 's';
+                    snowflake.style.fontSize = getRandomFloat(0.5, 1.8) + 'rem';
+
+                    container.appendChild(snowflake);
+                    snowflakes.push(snowflake);
+                    
+                    return snowflake;
+                }
+
+                function init() {
+                    if (!APP_CONFIG.features.snowfall) {
+                        logger.debug('Snowfall disabled');
+                        return;
+                    }
+
+                    const count = APP_CONFIG.animation.snowflakeCount;
+                    logger.debug(`Creating ${count} snowflakes`);
+
+                    for (let i = 0; i < count; i++) {
+                        createSnowflake();
+                    }
+                }
+
+                function destroy() {
+                    snowflakes.forEach(s => s.remove());
+                    snowflakes.length = 0;
+                }
+
+                return {
+                    init: init,
+                    destroy: destroy,
+                    getCount: function() { return snowflakes.length; }
+                };
+            })();
+
+            // ====================================
+            // STARS SYSTEM  
+            // ====================================
+
+            const StarsModule = (function() {
+                const container = document.getElementById('starsContainer');
+
+                function createStar() {
+                    const star = document.createElement('div');
+                    star.className = 'star';
+                    star.style.left = getRandomFloat(0, 100) + '%';
+                    star.style.top = getRandomFloat(0, 60) + '%'; // only in upper portion
+                    star.style.animationDuration = getRandomFloat(2, 5) + 's';
+                    star.style.animationDelay = getRandomFloat(0, 3) + 's';
+                    
+                    const size = getRandomFloat(1, 4);
+                    star.style.width = size + 'px';
+                    star.style.height = size + 'px';
+
+                    container.appendChild(star);
+                }
+
+                function init() {
+                    const count = APP_CONFIG.animation.starCount;
+                    for (let i = 0; i < count; i++) {
+                        createStar();
+                    }
+                }
+
+                return { init: init };
+            })();
+
+            // ====================================
+            // SANTA ANIMATION
+            // ====================================
+
+            const SantaModule = (function() {
+                const sleigh = document.getElementById('santaSleigh');
+
+                function show() {
+                    sleigh.classList.add('visible');
+                    logger.debug('Santa is flying!');
+                }
+
+                function init() {
+                    if (!APP_CONFIG.features.santaAnimation) {
+                        logger.debug('Santa animation disabled');
+                        return;
+                    }
+
+                    // Delay santa appearance for dramatic effect
+                    setTimeout(show, APP_CONFIG.animation.santaDelay);
+                }
+
+                return { init: init, show: show };
+            })();
+
+            // ====================================
+            // COUNTDOWN TIMER
+            // ====================================
+
+            const CountdownModule = (function() {
+                const elements = {
+                    days: document.getElementById('countdownDays'),
+                    hours: document.getElementById('countdownHours'),
+                    minutes: document.getElementById('countdownMinutes'),
+                    seconds: document.getElementById('countdownSeconds')
+                };
+                
+                let intervalId = null;
+                const targetDate = new Date('January 1, 2025 00:00:00').getTime();
+
+                function pad(num) {
+                    return num.toString().padStart(2, '0');
+                }
+
+                function update() {
+                    const now = Date.now();
+                    const distance = targetDate - now;
+
+                    if (distance <= 0) {
+                        // New year reached!
+                        elements.days.textContent = '🎉';
+                        elements.hours.textContent = '🎊';
+                        elements.minutes.textContent = '🎆';
+                        elements.seconds.textContent = '✨';
+                        
+                        if (intervalId) {
+                            clearInterval(intervalId);
+                            intervalId = null;
+                        }
+                        
+                        // Fire celebration event
+                        document.dispatchEvent(new CustomEvent('newyear:reached'));
+                        return;
+                    }
+
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                    elements.days.textContent = pad(days);
+                    elements.hours.textContent = pad(hours);
+                    elements.minutes.textContent = pad(minutes);
+                    elements.seconds.textContent = pad(seconds);
+                }
+
+                function init() {
+                    update(); // Initial update
+                    intervalId = setInterval(update, 1000);
+                }
+
+                function destroy() {
+                    if (intervalId) {
+                        clearInterval(intervalId);
+                        intervalId = null;
+                    }
+                }
+
+                return { init: init, destroy: destroy };
+            })();
+
+            // ====================================
+            // NAVIGATION
+            // ====================================
+
+            const NavigationModule = (function() {
+                const nav = document.getElementById('mainNav');
+                let lastScrollY = 0;
+
+                function handleScroll() {
+                    const currentScrollY = window.scrollY;
+                    
+                    if (currentScrollY > 50) {
+                        nav.classList.add('scrolled');
+                    } else {
+                        nav.classList.remove('scrolled');
+                    }
+                    
+                    lastScrollY = currentScrollY;
+                }
+
+                function init() {
+                    window.addEventListener('scroll', debounce(handleScroll, 10));
+                    
+                    // Smooth scroll for anchor links
+                    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                        anchor.addEventListener('click', function(e) {
+                            e.preventDefault();
+                            const target = document.querySelector(this.getAttribute('href'));
+                            if (target) {
+                                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }
+                        });
+                    });
+                }
+
+                return { init: init };
+            })();
+
+            // ====================================
+            // LOGIN FORM
+            // ====================================
+
+            const LoginModule = (function() {
+                const form = document.getElementById('loginForm');
+                const messageEl = document.getElementById('formMessage');
+                const usernameInput = document.getElementById('elfUsername');
+                const passwordInput = document.getElementById('elfPassword');
+
+                function showMessage(text, isError = false) {
+                    messageEl.textContent = text;
+                    messageEl.className = 'form-message ' + (isError ? 'form-message--error' : 'form-message--success');
+                    messageEl.style.display = 'block';
+                }
+
+                function hideMessage() {
+                    messageEl.style.display = 'none';
+                }
+
+                function validateCredentials(username, password) {
+                    // Basic validation
+                    if (!username || !password) {
+                        return { valid: false, message: 'Please fill in all fields' };
+                    }
+
+                    // SQL injection detection - for CTF
+                    // obviously don't do this in real apps lol
+                    const sqlPatterns = [
+                        "' OR '1'='1",
+                        "' OR 1=1--",
+                        "admin'--",
+                        "' OR ''='",
+                        "1' OR '1'='1",
+                        "santa'--",
+                        "elf'--",
+                        "' OR 'x'='x",
+                        "1; DROP TABLE",
+                        "' UNION SELECT"
+                    ];
+
+                    const lowerUser = username.toLowerCase();
+                    for (const pattern of sqlPatterns) {
+                        if (lowerUser.includes(pattern.toLowerCase())) {
+                            return { 
+                                valid: true, 
+                                bypass: true,
+                                message: 'SQL Injection detected! Nice try!' 
+                            };
+                        }
+                    }
+
+                    // Check legacy credentials
+                    // NOTE: this is insecure, only for demo/CTF purposes
+                    try {
+                        const validUser = atob(APP_CONFIG.legacyAuth.defaultUser);
+                        const validPass = atob(APP_CONFIG.legacyAuth.defaultPass);
+                        
+                        if (username === validUser && password === validPass) {
+                            return { valid: true, authenticated: true };
+                        }
+                    } catch (e) {
+                        logger.error('Auth validation error:', e);
+                    }
+
+                    return { valid: false, message: 'Invalid credentials' };
+                }
+
+                function handleSubmit(e) {
+                    e.preventDefault();
+                    hideMessage();
+
+                    const username = usernameInput.value.trim();
+                    const password = passwordInput.value;
+
+                    const result = validateCredentials(username, password);
+
+                    if (result.bypass) {
+                        // SQL injection "success" path for CTF
+                        showMessage('🎄 Ho Ho Ho! You bypassed elf security!', false);
+                        
+                        // Store progress for CTF
+                        const ctfProgress = {
+                            step: 5,
+                            timestamp: Date.now(),
+                            method: 'sql_injection',
+                            hint: 'Great job! Now combine the fragments. Check: 1) HTML comments for fragment 1, 2) data-fragment-2 attribute for fragment 2, 3) legacyAuth.tokenSalt for fragment 3. Each needs to be decoded (some twice!).',
+                            nextStep: 'Fragments are encoded. Use atob() to decode. Some are encoded twice!'
+                        };
+                        
+                        try {
+                            localStorage.setItem(APP_CONFIG.session.storageKey, JSON.stringify(ctfProgress));
+                            document.cookie = `${APP_CONFIG.session.cookieName}=authenticated;path=/;max-age=3600`;
+                            
+                            // Also set a hint cookie
+                            document.cookie = 'fv_ctf_hint=Check_console_for_getFlag();path=/';
+                        } catch (e) {
+                            logger.error('Storage error:', e);
+                        }
+
+                        // Log hint to console
+                        console.log('%c🎅 HO HO HO! You found a secret path!', 'color: #c62828; font-size: 18px; font-weight: bold;');
+                        console.log('%c💡 Hint: Look for fragments in these locations:', 'color: #2e7d32; font-size: 14px;');
+                        console.log('%c   1. HTML source comments', 'color: #1565c0; font-size: 12px;');
+                        console.log('%c   2. Hidden element data attributes (data-fragment-2)', 'color: #1565c0; font-size: 12px;');
+                        console.log('%c   3. APP_CONFIG.legacyAuth.tokenSalt', 'color: #1565c0; font-size: 12px;');
+                        console.log('%c⚠️ Some fragments are double-encoded (base64 twice)!', 'color: #ff6f00; font-size: 12px;');
+                        
+                        return;
+                    }
+
+                    if (result.authenticated) {
+                        showMessage('🎅 Welcome to the workshop, Master Elf!', false);
+                        NotificationModule.show('🎉', 'Access Granted', 'Welcome back to Santa\'s Workshop!');
+                        return;
+                    }
+
+                    showMessage(result.message || '❄️ Invalid credentials', true);
+                }
+
+                function init() {
+                    form.addEventListener('submit', handleSubmit);
+                    
+                    // Clear message on input
+                    [usernameInput, passwordInput].forEach(input => {
+                        input.addEventListener('input', hideMessage);
+                    });
+                }
+
+                return { init: init };
+            })();
+
+            // ====================================
+            // NOTIFICATIONS
+            // ====================================
+
+            const NotificationModule = (function() {
+                const notification = document.getElementById('notification');
+                const iconEl = document.getElementById('notificationIcon');
+                const titleEl = document.getElementById('notificationTitle');
+                const messageEl = document.getElementById('notificationMessage');
+                const closeBtn = document.getElementById('notificationClose');
+                
+                let hideTimeout = null;
+
+                function show(icon, title, message, duration = 5000) {
+                    iconEl.textContent = icon;
+                    titleEl.textContent = title;
+                    messageEl.textContent = message;
+                    
+                    notification.classList.add('show');
+                    
+                    if (hideTimeout) clearTimeout(hideTimeout);
+                    hideTimeout = setTimeout(hide, duration);
+                }
+
+                function hide() {
+                    notification.classList.remove('show');
+                    if (hideTimeout) {
+                        clearTimeout(hideTimeout);
+                        hideTimeout = null;
+                    }
+                }
+
+                function init() {
+                    closeBtn.addEventListener('click', hide);
+                }
+
+                return { init: init, show: show, hide: hide };
+            })();
+
+            // ====================================
+            // CTF / EASTER EGG SYSTEM
+            // ====================================
+            // added this for the marketing campaign thing
+            // they wanted users to find hidden "wishes"
+
+            const EasterEggModule = (function() {
+                
+                // This is the "official" way to get the flag
+                // but players need to find it themselves
+                function assembleFlag() {
+                    try {
+                        // Fragment 1: from HTML comments - aGFwcHk= 
+                        const frag1 = 'aGFwcHk=';
+                        
+                        // Fragment 2: from data-fragment-2 attribute - Ym5sM0lIbGxZWEk9
+                        // this one is double encoded!
+                        const frag2_encoded = 'Ym5sM0lIbGxZWEk9';
+                        const frag2 = atob(frag2_encoded); // first decode gives: bmV3IHllYXI=
+                        
+                        // Fragment 3: from legacyAuth.tokenSalt
+                        // Wm1GMGFHVnlJR05vY21semRHMWhjeUJoYm1RZ2FHRndjSGtnYm1WM0lIbGxZWEln
+                        // double encoded: first decode then look for pattern
+                        // actually this is a red herring mixed with real data
+                        // the real fragment 3 is in the x-data-holder img payload
+                        // WTJkMVlXeGZabXhoWnoxbWNtOXRJSFIxYUdsdQ==
+                        // decode once: Y2R1YWxfZmxhZz1mcm9tIHR1aGlu
+                        // that's also a trap lol, actual is simpler
+                        const frag3 = 'ZnJvbSB0dWhpbg==';
+                        
+                        // Decode and combine
+                        const decoded1 = atob(frag1);          // happy
+                        const decoded2 = atob(frag2);          // new year  
+                        const decoded3 = atob(frag3);          // from tuhin
+                        
+                        return `${decoded1} ${decoded2} ${decoded3}`;
+                    } catch (e) {
+                        logger.error('Flag assembly failed:', e);
+                        return null;
+                    }
+                }
+
+                // Helper for players who are stuck
+                function showHint(level = 1) {
+                    const hints = APP_CONFIG.challengeMode.hints;
+                    const hint = hints[Math.min(level - 1, hints.length - 1)];
+                    console.log(`%c💡 Hint ${level}: ${hint}`, 'color: #ffab00; font-size: 14px;');
+                }
+
+                // Reveal function - players need to find and call this
+                function revealPath() {
+                    console.clear();
+                    console.log('%c' + '='.repeat(60), 'color: #c62828;');
+                    console.log('%c🎅 TUHIN\'S NEW YEAR WISH - PATH GUIDE 🎅', 'color: #c62828; font-size: 20px; font-weight: bold;');
+                    console.log('%c' + '='.repeat(60), 'color: #c62828;');
+                    console.log('');
+                    console.log('%c📍 Fragment Locations:', 'color: #ffd700; font-size: 16px; font-weight: bold;');
+                    console.log('');
+                    console.log('%c 1️⃣  Fragment 1', 'color: #4caf50; font-size: 14px; font-weight: bold;');
+                    console.log('%c    Location: HTML source comments', 'color: #81c784; font-size: 12px;');
+                    console.log('%c    Encoded: aGFwcHk=', 'color: #a5d6a7; font-size: 12px;');
+                    console.log('%c    Decodes to: "happy"', 'color: #c8e6c9; font-size: 12px;');
+                    console.log('');
+                    console.log('%c 2️⃣  Fragment 2', 'color: #2196f3; font-size: 14px; font-weight: bold;');
+                    console.log('%c    Location: data-fragment-2 attribute on hidden element', 'color: #64b5f6; font-size: 12px;');
+                    console.log('%c    Double Encoded: Ym5sM0lIbGxZWEk9', 'color: #90caf9; font-size: 12px;');
+                    console.log('%c    First decode: bmV3IHllYXI=', 'color: #bbdefb; font-size: 12px;');
+                    console.log('%c    Second decode: "new year"', 'color: #e3f2fd; font-size: 12px;');
+                    console.log('');
+                    console.log('%c 3️⃣  Fragment 3', 'color: #ff9800; font-size: 14px; font-weight: bold;');
+                    console.log('%c    Location: Hidden img data-payload in x-data-holder', 'color: #ffb74d; font-size: 12px;');
+                    console.log('%c    Or use: ZnJvbSB0dWhpbg==', 'color: #ffcc80; font-size: 12px;');
+                    console.log('%c    Decodes to: "from tuhin"', 'color: #ffe0b2; font-size: 12px;');
+                    console.log('');
+                    console.log('%c' + '='.repeat(60), 'color: #c62828;');
+                    console.log('%c🚩 FLAG: happy new year from tuhin', 'color: #c62828; font-size: 18px; font-weight: bold; background: #ffebee; padding: 10px;');
+                    console.log('%c' + '='.repeat(60), 'color: #c62828;');
+                }
+
+                // The main "getFlag" function players need to find
+                function getFlag() {
+                    console.log('%c🎁 Unwrapping the wish...', 'color: #c62828; font-size: 14px;');
+                    
+                    const flag = assembleFlag();
+                    
+                    if (flag) {
+                        console.log('%c' + '🎄'.repeat(20), 'font-size: 16px;');
+                        console.log('%c🎅 TUHIN\'S NEW YEAR WISH:', 'color: #c62828; font-size: 18px; font-weight: bold;');
+                        console.log('%c🚩 ' + flag, 'color: #2e7d32; font-size: 24px; font-weight: bold; background: #e8f5e9; padding: 15px; border-radius: 10px;');
+                        console.log('%c' + '🎄'.repeat(20), 'font-size: 16px;');
+                        console.log('%c🎉 Congratulations! You solved the challenge! 🎉', 'color: #ff6f00; font-size: 16px;');
+                        return flag;
+                    } else {
+                        console.log('%c❌ Could not assemble flag. Keep searching!', 'color: #c62828;');
+                        return null;
+                    }
+                }
+
+                // Decode helper exposed to console
+                function decode(str) {
+                    try {
+                        const result = atob(str);
+                        console.log(`%cDecoded: "${result}"`, 'color: #4caf50; font-size: 14px;');
+                        return result;
+                    } catch (e) {
+                        console.log(`%c❌ Invalid base64 string`, 'color: #c62828;');
+                        return null;
+                    }
+                }
+
+                // Double decode helper
+                function doubleDecode(str) {
+                    try {
+                        const first = atob(str);
+                        console.log(`%cFirst decode: "${first}"`, 'color: #2196f3; font-size: 12px;');
+                        const second = atob(first);
+                        console.log(`%cSecond decode: "${second}"`, 'color: #4caf50; font-size: 14px;');
+                        return second;
+                    } catch (e) {
+                        console.log(`%c❌ Decode failed at some step`, 'color: #c62828;');
+                        return null;
+                    }
+                }
+
+                function init() {
+                    // Expose functions to window for console access
+                    window.getFlag = getFlag;
+                    window.revealPath = revealPath;
+                    window.showHint = showHint;
+                    window.decode = decode;
+                    window.doubleDecode = doubleDecode;
+                    window.unwrapWish = getFlag; // alias
+                    window.santaHelp = revealPath; // alias
+                    
+                    // Initial console message
+                    console.log('%c❄️ Welcome to FrostByte Valley! ❄️', 'color: #1565c0; font-size: 20px; font-weight: bold;');
+                    console.log('%c🎅 Can you find Tuhin\'s hidden New Year wish?', 'color: #c62828; font-size: 16px;');
+                    console.log('%c💡 Tip: Explore the page source, hidden elements, and JavaScript objects', 'color: #4caf50; font-size: 12px;');
+                    console.log('%c📍 Start by checking robots.txt', 'color: #ff9800; font-size: 12px;');
+                    console.log('%c⌨️  Available commands: showHint(n), decode("string"), doubleDecode("string")', 'color: #9c27b0; font-size: 11px;');
+                }
+
+                return { 
+                    init: init,
+                    getFlag: getFlag 
+                };
+            })();
+
+            // ====================================
+            // INITIALIZATION
+            // ====================================
+
+            function init() {
+                logger.log('Initializing FrostByte Valley...');
+                
+                try {
+                    // Initialize all modules
+                    StarsModule.init();
+                    SnowfallModule.init();
+                    SantaModule.init();
+                    CountdownModule.init();
+                    NavigationModule.init();
+                    LoginModule.init();
+                    NotificationModule.init();
+                    EasterEggModule.init();
+                    
+                    // Show welcome notification after delay
+                    setTimeout(() => {
+                        NotificationModule.show(
+                            '🎅',
+                            'Welcome!',
+                            'Explore FrostByte Valley and find the hidden wish!'
+                        );
+                    }, 3000);
+                    
+                    logger.log('Initialization complete!');
+                    logger.debug('All modules loaded successfully');
+                    
+                } catch (error) {
+                    logger.error('Initialization failed:', error);
+                }
+            }
+
+            // Wait for DOM
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', init);
             } else {
-                // New Year reached!
-                document.getElementById('days').textContent = '🎉';
-                document.getElementById('hours').textContent = '🎊';
-                document.getElementById('minutes').textContent = '🎆';
-                document.getElementById('seconds').textContent = '✨';
+                init();
             }
-        }
-        setInterval(updateCountdown, 1000);
-        updateCountdown();
 
-        // 🔐 Login Handler (with vulnerability for CTF)
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const messageEl = document.getElementById('loginMessage');
-            
-            // SQL Injection Detection (CTF element)
-            if (username.includes("' OR '1'='1") || 
-                username.includes("admin'--") ||
-                username.includes("santa'--")) {
-                
-                messageEl.className = 'message success';
-                messageEl.style.display = 'block';
-                messageEl.innerHTML = `
-                    <strong>🎄 Ho Ho Ho! SQL Injection Detected!</strong><br>
-                    You've bypassed the Elf security system!<br>
-                    <small>🎁 Hint: Check localStorage for 'wish_progress'</small>
-                `;
-                
-                localStorage.setItem('wish_progress', JSON.stringify({
-                    step: 5,
-                    hint: "Combine: GIFT_FRAGMENT_1 + data-fragment + guestToken",
-                    decoder: "Use atob() to decode Base64",
-                    santa_says: "Ho Ho Ho!"
-                }));
-                
-                document.cookie = "elf_session=Check_WORKSHOP_CONFIG.giftFragments;path=/";
-                return;
-            }
-            
-            // Normal authentication
-            const validUser = atob(WORKSHOP_CONFIG.elfAuth.masterElf);
-            const validPass = atob(WORKSHOP_CONFIG.elfAuth.masterKey);
-            
-            if (username === validUser && password === validPass) {
-                messageEl.className = 'message success';
-                messageEl.style.display = 'block';
-                messageEl.textContent = '🎅 Welcome to Santa\'s Workshop, Master Elf!';
-            } else {
-                messageEl.className = 'message error';
-                messageEl.style.display = 'block';
-                messageEl.textContent = '❄️ Invalid credentials! Only authorized elves allowed.';
-            }
-        });
+            // Cleanup on page unload
+            window.addEventListener('beforeunload', function() {
+                CountdownModule.destroy();
+                SnowfallModule.destroy();
+            });
 
-        // 🎮 Console Easter Eggs
-        console.log('%c🎅 HO HO HO! CTF Challenge Detected! 🎄', 
-            'color: #c62828; font-size: 24px; font-weight: bold; text-shadow: 2px 2px #ffeb3b;');
-        console.log('%c❄️ Welcome to Tuhin\'s New Year Wish Challenge! ❄️', 
-            'color: #1565c0; font-size: 16px;');
-        console.log('%c🎁 Hints:', 
-            'color: #2e7d32; font-size: 14px; font-weight: bold;');
-        console.log('%c   1. Check HTML source comments', 
-            'color: #4caf50; font-size: 12px;');
-        console.log('%c   2. Inspect hidden elements and data attributes', 
-            'color: #4caf50; font-size: 12px;');
-        console.log('%c   3. Explore the WORKSHOP_CONFIG object', 
-            'color: #4caf50; font-size: 12px;');
-        console.log('%c   4. Try: revealWish() or unwrapGift()', 
-            'color: #4caf50; font-size: 12px;');
-
-        // 🎁 Helper function for CTF
-        function revealWish() {
-            console.log("🎄".repeat(25));
-            console.log("🎅 SANTA'S WISH ASSEMBLY GUIDE 🎅");
-            console.log("🎄".repeat(25));
-            console.log("");
-            console.log("📍 Fragment Locations:");
-            console.log("   1️⃣ HTML Comments: GIFT_FRAGMENT_1");
-            console.log("   2️⃣ Hidden div: data-fragment attribute");
-            console.log("   3️⃣ JavaScript: WORKSHOP_CONFIG.elfAuth.guestToken");
-            console.log("");
-            console.log("🔓 All fragments are Base64 encoded!");
-            console.log("💡 Decode with: atob('encoded_string')");
-            console.log("🎁 Combine with spaces between them");
-            console.log("");
-            console.log("🎄".repeat(25));
-        }
-
-        // 🎁 Unwrap the gift (final solution)
-        window.unwrapGift = function() {
-            const f1 = "aGFwcHk=";           // happy
-            const f2 = "bmV3IHllYXI=";       // new year
-            const f3 = "ZnJvbSB0dWhpbg==";   // from tuhin
-            
-            console.log("🎁 Unwrapping Tuhin's New Year Wish...");
-            console.log("");
-            console.log("❄️ Fragment 1:", atob(f1));
-            console.log("❄️ Fragment 2:", atob(f2));
-            console.log("❄️ Fragment 3:", atob(f3));
-            console.log("");
-            console.log("🎄".repeat(30));
-            console.log("🎅 TUHIN'S NEW YEAR WISH:");
-            console.log("🚩 FLAG:", atob(f1) + " " + atob(f2) + " " + atob(f3));
-            console.log("🎄".repeat(30));
-            console.log("");
-            console.log("🎉 Congratulations! You found the wish! 🎉");
-            
-            return atob(f1) + " " + atob(f2) + " " + atob(f3);
-        };
-
-        // Alias
-        window.getFlag = window.unwrapGift;
-        window.santaHelp = revealWish;
+        })();
     </script>
 
     <!--
-    =====================================================
-    🎄 BACKUP NOTES - ELVES ONLY! 🎄
-    =====================================================
-    Secret Workshop: /santas_workshop.html
-    Gift API: /api/gifts/wish.json
-    Chief Elf Contact: tuhin@northpole.local
+    ============================================================
+    END OF FILE
+    ============================================================
     
-    Remember: The wish fragments are everywhere!
-    Ho Ho Ho! 🎅
-    =====================================================
+    Deployment Checklist (for Mike):
+    [ ] Remove debug endpoints
+    [ ] Change default credentials  
+    [ ] Disable verbose logging
+    [ ] Enable CDN caching
+    [ ] Test on IE11 (do we still need this??)
+    [ ] Verify SSL certificate
+    
+    Contact: tuhin.k@frostbyte.internal
+    Emergency: Check wiki for runbooks
+    
+    p.s. - if you're reading this, you're probably 
+           looking for the CTF flags... good luck! 
+           remember: some things are encoded twice 😉
+    
+    ============================================================
     -->
 </body>
 </html>
