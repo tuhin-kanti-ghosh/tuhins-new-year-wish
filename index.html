@@ -20,54 +20,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@400;700&family=Nunito:wght@300;400;600;700&family=Fira+Code&display=swap" rel="stylesheet">
     
     <style>
-        /* 
-         * FrostByte Valley - Main Stylesheet
-         * Author: Tuhin K.
-         * Last modified: Dec 29, 2025
-         * 
-         * TODO: Clean up unused styles before Jan release
-         * FIXME: Mobile nav menu still buggy on iOS
-         * 
-         * Color Palette:
-         * - Primary Blue: #1a237e
-         * - Accent Red: #c62828  
-         * - Snow White: #f5f5f5
-         * - Gold: #ffd700
-         */
-
-        :root {
-            --primary-dark: #0a0f2e;
-            --primary-blue: #1a237e;
-            --accent-red: #c62828;
-            --accent-red-dark: #8e0000;
-            --snow-white: #f5f5f5;
-            --ice-blue: #e3f2fd;
-            --gold: #ffd700;
-            --gold-dark: #c5a000;
-            --text-light: #ffffff;
-            --text-muted: #b0bec5;
-            --shadow-dark: rgba(0, 0, 0, 0.4);
-            --glass-bg: rgba(255, 255, 255, 0.08);
-            --glass-border: rgba(255, 255, 255, 0.15);
-            
-            /* z-index management - sarah said to document these */
-            --z-background: -1;
-            --z-content: 1;
-            --z-overlay: 100;
-            --z-modal: 200;
-            --z-snow: 300;
-            --z-santa: 400;
-            --z-notification: 500;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
+;
         }
 
         body {
@@ -84,17 +37,15 @@
             color: var(--text-light);
             overflow-x: hidden;
             line-height: 1.6;
-            /* prevent text selection on decorative elements - ux feedback */
+            
             -webkit-user-select: text;
             user-select: text;
         }
 
-        /* === SNOWFALL SYSTEM === */
-        /* rewrote this 3 times... finally works properly lol */
         
         .snowfall-container {
             position: fixed;
-            inset: 0; /* shorthand for top/right/bottom/left: 0 */
+            inset: 0; 
             pointer-events: none;
             z-index: var(--z-snow);
             overflow: hidden;
@@ -156,9 +107,7 @@
             50% { transform: translateX(20px); }
         }
 
-        /* === AURORA / NORTHERN LIGHTS === */
-        /* based on that codepen i found - modified colors */
-        
+      
         .aurora-container {
             position: fixed;
             top: 0;
@@ -393,8 +342,7 @@
         .tree:nth-child(3n) { font-size: 4rem; }
         .tree:nth-child(4n) { font-size: 2.5rem; }
 
-        /* === STARS === */
-        /* procedurally generated in JS - this is just fallback */
+  
         
         .stars-container {
             position: fixed;
@@ -417,8 +365,7 @@
             50% { opacity: 1; transform: scale(1.2); }
         }
 
-        /* === NAVIGATION === */
-        /* kept it simple - client didn't want anything fancy */
+       
         
         .main-nav {
             position: fixed;
@@ -515,7 +462,7 @@
             font-size: 1.1rem;
         }
 
-        /* mobile menu - TODO: implement hamburger */
+        
         .mobile-menu-btn {
             display: none;
             background: none;
@@ -530,8 +477,7 @@
             .mobile-menu-btn { display: block; }
         }
 
-        /* === MAIN CONTENT AREA === */
-        
+    
         .main-content {
             position: relative;
             z-index: var(--z-content);
@@ -546,7 +492,7 @@
             padding: 0 20px;
         }
 
-        /* === HERO SECTION === */
+      
         
         .hero-section {
             text-align: center;
@@ -724,7 +670,7 @@
             font-weight: 600;
         }
 
-        /* === FEATURES GRID === */
+        
         
         .features-section {
             padding: 60px 0;
@@ -811,8 +757,6 @@
             line-height: 1.6;
         }
 
-        /* === LOGIN SECTION === */
-        /* styled like an igloo - design team's idea */
         
         .login-section {
             padding: 60px 0;
@@ -1017,7 +961,7 @@
             top: -999999px;
         }
 
-        /* some debug styles i forgot to remove */
+       
         .dbg-element {
             opacity: 0;
             pointer-events: none;
@@ -1025,7 +969,7 @@
             color: transparent;
         }
 
-        /* weird style from the old codebase... keeping for compatibility */
+        
         .x-data-holder {
             width: 0;
             height: 0;
@@ -1034,7 +978,7 @@
             bottom: -9999px;
         }
 
-        /* === NOTIFICATIONS === */
+       
         
         .notification {
             position: fixed;
@@ -1116,23 +1060,7 @@
     </style>
 </head>
 <body>
-    <!-- 
-    ============================================================
-    FrostByte Valley - Main Site
-    ============================================================
-    Dev: tuhin.k@frostbyte.internal
-    Last Update: 12/29/2024
-    
-    CHANGELOG:
-    - Fixed countdown timer bug (finally!)
-    - Added new snow animation
-    - Updated color palette per design team request
-    - TODO: Remove debug endpoints before going live
-    - TODO: Change default passwords
-    
-    IMPORTANT NOTES:
-    ----------------
-    - Debug API still active at /debug/config.json (DISABLE BEFORE LAUNCH!!)
+    FORE LAUNCH!!)
     - Old auth system backup: aGFwcHk= (reminder for migration)
     - Sarah's test account still in system... need to remove
     
@@ -1143,23 +1071,23 @@
     ============================================================
     -->
 
-    <!-- Dev mode indicator - hidden in prod -->
+  
     <div class="dev-marker">DEV MODE</div>
 
-    <!-- Aurora / Northern Lights -->
+  
     <div class="aurora-container" role="presentation" aria-hidden="true">
         <div class="aurora-layer aurora-layer--1"></div>
         <div class="aurora-layer aurora-layer--2"></div>
         <div class="aurora-layer aurora-layer--3"></div>
     </div>
 
-    <!-- Stars background - populated by JS -->
+   
     <div class="stars-container" id="starsContainer" aria-hidden="true"></div>
 
-    <!-- Snowfall - populated by JS -->
+  
     <div class="snowfall-container" id="snowfallContainer" aria-hidden="true"></div>
 
-    <!-- Flying Santa -->
+ 
     <div class="santa-sleigh-wrapper" id="santaSleigh" aria-hidden="true">
         <div class="sparkle-trail">
             <div class="sparkle"></div>
@@ -1277,8 +1205,6 @@
                 <p class="message-card-signature">— Santa Claus 🎅</p>
             </div>
 
-            <!-- HIDDEN DATA ELEMENTS - CTF CHALLENGE COMPONENTS -->
-            <!-- these are from the old CMS, don't delete - might break something -->
             
             <div class="legacy-data-container" 
                  id="legacyDataStore" 
@@ -1293,7 +1219,7 @@
                 <span data-type="legacy-store">DEPRECATED: Use new API</span>
             </div>
 
-            <!-- migration note: this was for the old wish system -->
+        
             <aside class="visually-hidden" 
                    id="archiveDataNode"
                    data-archive-date="2024-06"
@@ -1302,15 +1228,15 @@
                 Archive reference: Check localStorage key 'fv_session_data' for fragment assembly instructions
             </aside>
 
-            <!-- debug element from sarah's testing - forgot to remove -->
+            
             <div class="dbg-element" 
                  id="__dbg_data_node" 
                  data-dbg-level="3"
                  data-dbg-msg="Fragment hint: combine results from steps 1-4">
-                <!-- debug placeholder -->
+               
             </div>
 
-            <!-- old analytics pixel holder - repurposed for... something -->
+          
             <div class="x-data-holder" id="xDataHolder">
                 <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" 
                      alt=""
@@ -1320,9 +1246,7 @@
                      height="1"
                      aria-hidden="true">
             </div>
-            <!-- end hidden elements -->
-
-            <!-- Features Section -->
+          
             <section class="features-section" id="features">
                 <div class="section-header">
                     <h2 class="section-title">🎁 Winter Wonderland Magic 🎁</h2>
@@ -1430,48 +1354,17 @@
     </div>
 
     <script>
-        /**
-         * FrostByte Valley - Main Application Script
-         * ==========================================
-         * 
-         * Author: Tuhin K.
-         * Created: October 2024
-         * Last Modified: December 29, 2024
-         * 
-         * Dependencies: None (vanilla JS only - client request)
-         * 
-         * NOTES:
-         * - Using ES6+ features, transpile for IE11 if needed (do we still support IE??)
-         * - Config object contains some legacy data, don't delete without checking with backend team
-         * - The auth system is a placeholder, actual auth goes through /api/v2/auth
-         * 
-         * TODO:
-         * - [ ] Refactor countdown to use Web Workers
-         * - [ ] Add service worker for offline support
-         * - [ ] Clean up old config entries
-         * - [ ] Remove debug logging before prod deployment
-         * - [x] Fix memory leak in snow animation (fixed 12/28)
-         * 
-         * KNOWN BUGS:
-         * - #127: Countdown flickers on slow connections
-         * - #134: Santa animation stutters on Firefox mobile
-         */
+        
 
         (function() {
             'use strict';
 
-            // ====================================
-            // CONFIGURATION
-            // ====================================
-            // WARNING: Some of these are sensitive! Review before committing!
-            // I've asked security team to audit this... still waiting (2 weeks now)
+           
             
             const APP_CONFIG = {
                 name: 'FrostByte Valley',
                 version: '2025.1.0-snow',
-                environment: 'production', // change to 'development' for debug mode
-                
-                // Feature flags - managed by product team
+                environment: 'production', 
                 features: {
                     snowfall: true,
                     aurora: true,
@@ -1495,9 +1388,7 @@
                     wishes: '/api/gifts/wish.json'
                 },
                 
-                // Legacy authentication data - from old system
-                // TODO: migrate to new auth system (ticket #892)
-                // keeping for backwards compatibility
+              
                 legacyAuth: {
                     // these are just placeholders... right?
                     defaultUser: 'ZWxmX2FkbWlu',           // elf_admin (base64)
@@ -1521,21 +1412,12 @@
                 challengeMode: {
                     enabled: true,
                     difficulty: 'hard',
-                    // Fragment locations (encoded for "security" lol)
-                    // Step 1 - Check robots.txt
-                    // Step 2 - HTML comments have the key
-                    // Step 3 - Data attributes hold piece 2  
-                    // Step 4 - This config has piece 3 (encoded twice)
-                    // Step 5 - Combine and decode
+                   
                     fragments: {
-                        // These are double-encoded (base64 twice) for extra "security"
-                        // piece1 is in the HTML comments: aGFwcHk=
-                        piece1_location: 'SFRNTCBDT01NRU5UUw==', // "HTML COMMENTS"
-                        // piece2 is in data-fragment-2 attribute (also double encoded)
-                        piece2_location: 'REFUQSBBVFRSSUJVVEU=', // "DATA ATTRIBUTE" 
-                        // piece3 is right here in legacyAuth.tokenSalt (also double encoded)
-                        piece3_location: 'Q09ORklHIE9CSkVDVA==', // "CONFIG OBJECT"
-                        // red herring - this is NOT part of the flag
+                        
+                        piece1_location: 'SFRNTCBDT01NRU5UUw==', 
+                        piece2_location: 'REFUQSBBVFRSSUJVVEU=', 
+                        piece3_location: 'Q09ORklHIE9CSkVDVA==', 
                         piece4_fake: 'dGhpcyBpcyBub3QgdGhlIGZsYWcgbG9s'
                     },
                     // Hint system
@@ -1549,21 +1431,13 @@
                 }
             };
 
-            // Store reference globally for debugging
-            // remove this line before production!! 
+           
             window._appConfig = APP_CONFIG;
             
-            // Also expose for console access... for "testing"
+           
             window.FrostByteConfig = APP_CONFIG;
 
-            // ====================================
-            // UTILITY FUNCTIONS
-            // ====================================
-
-            /**
-             * Simple logging wrapper - respects debug mode
-             * @param {string} message 
-             * @param {string} level - 'log', 'warn', 'error', 'debug'
+          
              */
             const logger = {
                 log: function(msg, ...args) {
@@ -1612,8 +1486,7 @@
                 };
             }
 
-            /**
-             * Check if element is in viewport
+            
              */
             function isInViewport(element) {
                 const rect = element.getBoundingClientRect();
@@ -1626,8 +1499,7 @@
             }
 
             /**
-             * Decode helper - for legacy data compatibility
-             * don't ask why this exists, just leave it
+          
              */
             function decodeFragment(encoded) {
                 try {
@@ -1638,9 +1510,7 @@
                 }
             }
 
-            // ====================================
-            // SNOWFALL SYSTEM
-            // ====================================
+          
 
             const SnowfallModule = (function() {
                 const container = document.getElementById('snowfallContainer');
@@ -1651,7 +1521,7 @@
                     const snowflake = document.createElement('span');
                     snowflake.className = 'snowflake';
                     
-                    // Random type for variety
+                  
                     const rand = Math.random();
                     if (rand > 0.9) {
                         snowflake.classList.add('snowflake--large');
@@ -1699,9 +1569,7 @@
                 };
             })();
 
-            // ====================================
-            // STARS SYSTEM  
-            // ====================================
+            
 
             const StarsModule = (function() {
                 const container = document.getElementById('starsContainer');
@@ -1731,9 +1599,7 @@
                 return { init: init };
             })();
 
-            // ====================================
-            // SANTA ANIMATION
-            // ====================================
+          
 
             const SantaModule = (function() {
                 const sleigh = document.getElementById('santaSleigh');
@@ -1749,16 +1615,14 @@
                         return;
                     }
 
-                    // Delay santa appearance for dramatic effect
+                 
                     setTimeout(show, APP_CONFIG.animation.santaDelay);
                 }
 
                 return { init: init, show: show };
             })();
 
-            // ====================================
-            // COUNTDOWN TIMER
-            // ====================================
+           
 
             const CountdownModule = (function() {
                 const elements = {
@@ -2031,34 +1895,20 @@
                 return { init: init, show: show, hide: hide };
             })();
 
-            // ====================================
-            // CTF / EASTER EGG SYSTEM
-            // ====================================
-            // added this for the marketing campaign thing
-            // they wanted users to find hidden "wishes"
+           
 
             const EasterEggModule = (function() {
                 
-                // This is the "official" way to get the flag
-                // but players need to find it themselves
+               
                 function assembleFlag() {
                     try {
-                        // Fragment 1: from HTML comments - aGFwcHk= 
+                       
                         const frag1 = 'aGFwcHk=';
                         
-                        // Fragment 2: from data-fragment-2 attribute - Ym5sM0lIbGxZWEk9
-                        // this one is double encoded!
-                        const frag2_encoded = 'Ym5sM0lIbGxZWEk9';
-                        const frag2 = atob(frag2_encoded); // first decode gives: bmV3IHllYXI=
                         
-                        // Fragment 3: from legacyAuth.tokenSalt
-                        // Wm1GMGFHVnlJR05vY21semRHMWhjeUJoYm1RZ2FHRndjSGtnYm1WM0lIbGxZWEln
-                        // double encoded: first decode then look for pattern
-                        // actually this is a red herring mixed with real data
-                        // the real fragment 3 is in the x-data-holder img payload
-                        // WTJkMVlXeGZabXhoWnoxbWNtOXRJSFIxYUdsdQ==
-                        // decode once: Y2R1YWxfZmxhZz1mcm9tIHR1aGlu
-                        // that's also a trap lol, actual is simpler
+                        const frag2_encoded = 'Ym5sM0lIbGxZWEk9';
+                        const frag2 = atob(frag2_encoded);
+                        
                         const frag3 = 'ZnJvbSB0dWhpbg==';
                         
                         // Decode and combine
@@ -2073,14 +1923,14 @@
                     }
                 }
 
-                // Helper for players who are stuck
+               
                 function showHint(level = 1) {
                     const hints = APP_CONFIG.challengeMode.hints;
                     const hint = hints[Math.min(level - 1, hints.length - 1)];
                     console.log(`%c💡 Hint ${level}: ${hint}`, 'color: #ffab00; font-size: 14px;');
                 }
 
-                // Reveal function - players need to find and call this
+              
                 function revealPath() {
                     console.clear();
                     console.log('%c' + '='.repeat(60), 'color: #c62828;');
@@ -2110,7 +1960,7 @@
                     console.log('%c' + '='.repeat(60), 'color: #c62828;');
                 }
 
-                // The main "getFlag" function players need to find
+              
                 function getFlag() {
                     console.log('%c🎁 Unwrapping the wish...', 'color: #c62828; font-size: 14px;');
                     
@@ -2129,7 +1979,7 @@
                     }
                 }
 
-                // Decode helper exposed to console
+               
                 function decode(str) {
                     try {
                         const result = atob(str);
@@ -2156,7 +2006,7 @@
                 }
 
                 function init() {
-                    // Expose functions to window for console access
+                    
                     window.getFlag = getFlag;
                     window.revealPath = revealPath;
                     window.showHint = showHint;
@@ -2165,7 +2015,7 @@
                     window.unwrapWish = getFlag; // alias
                     window.santaHelp = revealPath; // alias
                     
-                    // Initial console message
+                    
                     console.log('%c❄️ Welcome to FrostByte Valley! ❄️', 'color: #1565c0; font-size: 20px; font-weight: bold;');
                     console.log('%c🎅 Can you find Tuhin\'s hidden New Year wish?', 'color: #c62828; font-size: 16px;');
                     console.log('%c💡 Tip: Explore the page source, hidden elements, and JavaScript objects', 'color: #4caf50; font-size: 12px;');
@@ -2179,9 +2029,7 @@
                 };
             })();
 
-            // ====================================
-            // INITIALIZATION
-            // ====================================
+            /
 
             function init() {
                 logger.log('Initializing FrostByte Valley...');
@@ -2214,14 +2062,14 @@
                 }
             }
 
-            // Wait for DOM
+        
             if (document.readyState === 'loading') {
                 document.addEventListener('DOMContentLoaded', init);
             } else {
                 init();
             }
 
-            // Cleanup on page unload
+           
             window.addEventListener('beforeunload', function() {
                 CountdownModule.destroy();
                 SnowfallModule.destroy();
@@ -2230,21 +2078,7 @@
         })();
     </script>
 
-    <!--
-    ============================================================
-    END OF FILE
-    ============================================================
-    
-    Deployment Checklist (for Mike):
-    [ ] Remove debug endpoints
-    [ ] Change default credentials  
-    [ ] Disable verbose logging
-    [ ] Enable CDN caching
-    [ ] Test on IE11 (do we still need this??)
-    [ ] Verify SSL certificate
-    
-    Contact: tuhin.k@frostbyte.internal
-    Emergency: Check wiki for runbooks
+  
     
     p.s. - if you're reading this, you're probably 
            looking for the CTF flags... good luck! 
